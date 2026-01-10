@@ -19,10 +19,12 @@ export const NAV_LINKS = [
   { href: '/blog', label: 'Blog' },
 ];
 
-export const FOOTER_LINKS = {
+type FooterLink = { href: string; label: string; external?: boolean };
+
+export const FOOTER_LINKS: { product: FooterLink[]; company: FooterLink[]; legal: FooterLink[] } = {
   product: [
     { href: '/blog', label: 'Blog' },
-    { href: '/status', label: 'Status' },
+    { href: 'https://merg.openstatus.dev', label: 'Status', external: true },
   ],
   company: [
     { href: '/about', label: 'About' },
