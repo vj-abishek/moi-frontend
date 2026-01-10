@@ -1,5 +1,7 @@
 export async function GET(context) {
   const siteUrl = context.site?.href || 'https://moi.abs.wiki';
+  const site = context.site || new URL('https://moi.abs.wiki');
+  const appSiteUrl = `${site.protocol}//app.${site.hostname}`;
   
   const content = `# Moi - Gift Contribution Tracking Platform
 
@@ -53,7 +55,7 @@ Most routes require authentication. Only specific public routes are accessible w
 
 ### App Routes (Login Required)
 
-The main application is hosted at https://app.moi.abs.wiki
+The main application is hosted at ${appSiteUrl}
 
 - / - Home dashboard showing managed events and contributions
 - /groups/{id} - Event management page
