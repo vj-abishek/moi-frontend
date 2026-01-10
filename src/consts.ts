@@ -1,6 +1,19 @@
 export const SITE_TITLE = 'Moi';
 export const SITE_DESCRIPTION = 'Track gift contributions during weddings and celebrations. Never miss a மொய்.';
 
+// App subdomain URL builder - prefixes 'app.' to the current domain
+export function getAppUrl(path: string, currentUrl: URL): string {
+  const hostname = currentUrl.hostname;
+  
+  // In development (localhost), use a configurable app URL or same host with different port
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    return `http://localhost:3000${path}`; // Adjust port as needed for local Rails dev
+  }
+  
+  // In production, prefix with 'app.'
+  return `${currentUrl.protocol}//app.${hostname}${path}`;
+}
+
 export const NAV_LINKS = [
   { href: '/faq', label: 'FAQ' },
   { href: '/blog', label: 'Blog' },

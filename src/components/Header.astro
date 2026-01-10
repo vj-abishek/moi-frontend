@@ -1,7 +1,8 @@
 ---
-import { SITE_TITLE, NAV_LINKS } from '../consts';
+import { SITE_TITLE, NAV_LINKS, getAppUrl } from '../consts';
 
 const currentPath = Astro.url.pathname;
+const signupUrl = getAppUrl('/signup', Astro.url);
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-base-100/80 border-b border-base-300">
@@ -50,7 +51,7 @@ const currentPath = Astro.url.pathname;
       </ul>
       
       <a 
-        href="/signup"
+        href={signupUrl}
         class="px-5 py-2.5 bg-primary text-primary-content text-xs uppercase tracking-widest font-semibold hover:bg-primary/90 transition-all"
       >
         Get Started
