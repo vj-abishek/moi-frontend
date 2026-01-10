@@ -1,5 +1,8 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { getAppUrl } from '../consts';
+
+const signupUrl = getAppUrl('/signup', Astro.url);
 ---
 
 <PageLayout title="About Us" description="Learn about Moi - digitizing the timeless tradition of மொய் for modern celebrations.">
@@ -126,7 +129,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       <h2 class="text-2xl font-bold mb-4">Ready to get started?</h2>
       <p class="text-base-content/60 mb-6">Create your first event in minutes</p>
       <div class="flex flex-wrap justify-center gap-4">
-        <a href="/signup" class="px-8 py-4 bg-primary text-primary-content text-sm uppercase tracking-widest font-semibold hover:bg-primary/90 transition-all">
+        <a href={signupUrl} target="_blank" rel="noopener noreferrer" class="px-8 py-4 bg-primary text-primary-content text-sm uppercase tracking-widest font-semibold hover:bg-primary/90 transition-all">
           Get Started
         </a>
         <a href="/support" class="px-8 py-4 border border-base-content/20 text-sm uppercase tracking-widest font-medium hover:border-primary hover:text-primary transition-colors">

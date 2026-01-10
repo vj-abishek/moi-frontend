@@ -2,7 +2,9 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE, FEATURES, HOW_IT_WORKS } from '../consts';
+import { SITE_DESCRIPTION, SITE_TITLE, FEATURES, HOW_IT_WORKS, getAppUrl } from '../consts';
+
+const signupUrl = getAppUrl('/signup', Astro.url);
 ---
 
 <!doctype html>
@@ -50,7 +52,9 @@ import { SITE_DESCRIPTION, SITE_TITLE, FEATURES, HOW_IT_WORKS } from '../consts'
             
             <div class="flex flex-col sm:flex-row gap-4 pt-4">
               <a 
-                href="/signup" 
+                href={signupUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 class="px-8 py-4 bg-primary text-primary-content text-sm uppercase tracking-widest font-semibold hover:bg-primary/90 transition-all hover:scale-105 text-center "
               >
                 Get Started — It's Free
@@ -300,7 +304,9 @@ import { SITE_DESCRIPTION, SITE_TITLE, FEATURES, HOW_IT_WORKS } from '../consts'
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <a 
-                href="/signup" 
+                href={signupUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 class="px-10 py-5 bg-primary text-primary-content text-sm uppercase tracking-widest font-semibold hover:bg-primary/90 transition-all hover:scale-105 "
               >
                 Create Your First Event
