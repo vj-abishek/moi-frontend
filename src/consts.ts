@@ -40,7 +40,7 @@ export const FOOTER_LINKS = {
 export const FEATURES = [
   {
     title: 'Live Analytics',
-    description: 'Real-time dashboard showing collections as they happen via WebSockets.',
+    description: 'Watch contributions come in as they happen. No refresh needed.',
     icon: 'chart',
   },
   {
