@@ -13,10 +13,6 @@
   white-space: nowrap;
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
 
 /* Selection color */
 ::selection {
