@@ -6,9 +6,9 @@ const currentYear = new Date().getFullYear();
 
 <footer class="border-t border-base-300 mt-auto bg-base-200/30">
   <div class="max-w-6xl mx-auto px-6 py-16">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-12">
       <!-- Brand -->
-      <div class="md:col-span-2 space-y-4">
+      <div class="col-span-2 space-y-4">
         <a href="/" class="text-xl font-bold tracking-tight font-sans flex items-center gap-2">
           <span class="text-primary">●</span>
           {SITE_TITLE}
@@ -26,6 +26,23 @@ const currentYear = new Date().getFullYear();
         <h3 class="text-xs uppercase tracking-widest text-base-content/40 font-semibold">Product</h3>
         <ul class="space-y-3">
           {FOOTER_LINKS.product.map((link) => (
+            <li>
+              <a 
+                href={link.href}
+                class="text-sm text-base-content/60 hover:text-primary transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Company Links -->
+      <div class="space-y-4">
+        <h3 class="text-xs uppercase tracking-widest text-base-content/40 font-semibold">Company</h3>
+        <ul class="space-y-3">
+          {FOOTER_LINKS.company.map((link) => (
             <li>
               <a 
                 href={link.href}

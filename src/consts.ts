@@ -12,13 +12,19 @@ export const FOOTER_LINKS = {
   product: [
     { href: '#features', label: 'Features' },
     { href: '#how-it-works', label: 'How It Works' },
-    { href: '/faq', label: 'FAQ' },
     { href: '/blog', label: 'Blog' },
+    { href: '/status', label: 'Status' },
+  ],
+  company: [
+    { href: '/about', label: 'About' },
+    { href: '/trust', label: 'Trust' },
+    { href: '/faq', label: 'FAQ' },
+    { href: '/support', label: 'Support' },
   ],
   legal: [
     { href: '/privacy', label: 'Privacy' },
     { href: '/terms', label: 'Terms' },
-    { href: '/support', label: 'Support' },
+    { href: '/refunds', label: 'Refunds' },
   ],
 };
 
