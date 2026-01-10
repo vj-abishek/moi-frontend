@@ -106,7 +106,6 @@ import { SITE_DESCRIPTION, SITE_TITLE, FEATURES, HOW_IT_WORKS } from '../consts'
             {FEATURES.map((feature, index) => (
               <div 
                 class="group p-8 bg-base-100 border border-base-300 hover:border-primary/50 transition-all duration-300 "
-                style={`animation: fadeInUp 0.5s ease-out ${index * 0.1}s both`}
               >
                 <div class="w-12 h-12 mb-6 flex items-center justify-center bg-primary/10  group-hover:bg-primary/20 transition-colors">
                   {feature.icon === 'chart' && (
@@ -167,7 +166,6 @@ import { SITE_DESCRIPTION, SITE_TITLE, FEATURES, HOW_IT_WORKS } from '../consts'
             {HOW_IT_WORKS.map((step, index) => (
               <div 
                 class="relative text-center"
-                style={`animation: fadeInUp 0.5s ease-out ${index * 0.15}s both`}
               >
                 {index < HOW_IT_WORKS.length - 1 && (
                   <div class="hidden md:block absolute top-12 left-[60%] w-[80%] h-px bg-gradient-to-r from-primary/50 to-transparent"></div>
@@ -317,18 +315,5 @@ import { SITE_DESCRIPTION, SITE_TITLE, FEATURES, HOW_IT_WORKS } from '../consts'
     </main>
 
     <Footer />
-
-    <style>
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    </style>
   </body>
 </html>
