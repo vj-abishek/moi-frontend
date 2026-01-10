@@ -1,5 +1,11 @@
 @import "tailwindcss";
+@import "../styles/global.css";
 @plugin "daisyui";
+
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+}
 
 @plugin "daisyui/theme" {
   name: "black";
