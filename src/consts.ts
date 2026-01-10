@@ -2,16 +2,12 @@ export const SITE_TITLE = 'Moi';
 export const SITE_DESCRIPTION = 'Track gift contributions during weddings and celebrations. Never miss a மொய்.';
 
 export const NAV_LINKS = [
-  { href: '#features', label: 'Features' },
-  { href: '#how-it-works', label: 'How It Works' },
   { href: '/faq', label: 'FAQ' },
   { href: '/blog', label: 'Blog' },
 ];
 
 export const FOOTER_LINKS = {
   product: [
-    { href: '#features', label: 'Features' },
-    { href: '#how-it-works', label: 'How It Works' },
     { href: '/blog', label: 'Blog' },
     { href: '/status', label: 'Status' },
   ],
