@@ -1,0 +1,12 @@
+# robots.txt for Moi - Gift Contribution Tracking
+# https://www.robotstxt.org/
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://moi.abs.wiki/sitemap-index.xml
+
+# LLM-specific
+Allow: /llms.txt
+
