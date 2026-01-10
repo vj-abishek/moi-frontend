@@ -1,114 +1,91 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { SITE_TITLE } from '../../consts';
 
 const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={`Blog | ${SITE_TITLE}`} description="All blog posts" />
+  </head>
+  <body class="min-h-screen flex flex-col bg-base-100">
+    <Header />
+    
+    <main class="flex-1">
+      <!-- Page Header -->
+      <section class="border-b border-base-300">
+        <div class="max-w-5xl mx-auto px-6 py-16 md:py-24">
+          <p class="text-xs uppercase tracking-[0.3em] text-base-content/40 font-medium mb-2">
+            Archive
+          </p>
+          <h1 class="text-4xl md:text-6xl font-bold tracking-tight font-sans">
+            Blog
+          </h1>
+          <p class="mt-4 text-base-content/60 max-w-lg">
+            A collection of thoughts, tutorials, and explorations.
+          </p>
+        </div>
+      </section>
+
+      <!-- Posts List -->
+      <section>
+        <div class="max-w-5xl mx-auto px-6 py-12">
+          <div class="space-y-0 divide-y divide-base-300">
+            {posts.map((post, index) => (
+              <article 
+                class="group py-8 first:pt-0 last:pb-0"
+                style={`animation: fadeInUp 0.4s ease-out ${index * 0.05}s both`}
+              >
+                <a href={`/blog/${post.id}/`} class="grid md:grid-cols-[120px_1fr] gap-4 md:gap-8">
+                  <div class="text-xs text-base-content/40 pt-1.5">
+                    <FormattedDate date={post.data.pubDate} />
+                  </div>
+                  <div class="space-y-2">
+                    <h2 class="text-xl md:text-2xl font-medium group-hover:text-white transition-colors text-base-content/80 font-sans">
+                      {post.data.title}
+                    </h2>
+                    <p class="text-base-content/50 line-clamp-2">
+                      {post.data.description}
+                    </p>
+                    <span class="inline-block text-xs uppercase tracking-widest text-base-content/40 group-hover:text-white transition-colors pt-2">
+                      Read more →
+                    </span>
+                  </div>
+                </a>
+              </article>
+            ))}
+          </div>
+
+          {posts.length === 0 && (
+            <div class="text-center py-24">
+              <p class="text-base-content/40">No posts yet. Check back soon!</p>
+            </div>
+          )}
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+
+    <style>
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </body>
 </html>
