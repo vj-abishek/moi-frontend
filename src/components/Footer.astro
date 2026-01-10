@@ -9,8 +9,27 @@ const currentYear = new Date().getFullYear();
     <div class="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-12">
       <!-- Brand -->
       <div class="col-span-2 space-y-4">
-        <a href="/" class="text-xl font-bold tracking-tight font-sans flex items-center gap-2">
-          <span class="text-primary">●</span>
+        <a href="/" class="text-xl font-bold tracking-tight font-sans flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-8 h-8">
+            <defs>
+              <linearGradient id="footerSunGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#FCD34D"/>
+                <stop offset="50%" style="stop-color:#F59E0B"/>
+                <stop offset="100%" style="stop-color:#D97706"/>
+              </linearGradient>
+              <linearGradient id="footerRuby" x1="50%" y1="0%" x2="50%" y2="100%">
+                <stop offset="0%" style="stop-color:#F87171"/>
+                <stop offset="100%" style="stop-color:#DC2626"/>
+              </linearGradient>
+            </defs>
+            <rect x="8" y="8" width="84" height="84" rx="20" fill="url(#footerSunGold)"/>
+            <path d="M44 8 L44 92 L56 92 L56 8 Z" fill="url(#footerRuby)"/>
+            <path d="M8 44 L92 44 L92 56 L8 56 Z" fill="url(#footerRuby)"/>
+            <path d="M50 44 Q28 44 24 28 Q20 12 36 16 Q52 20 50 44" fill="url(#footerRuby)"/>
+            <path d="M50 44 Q72 44 76 28 Q80 12 64 16 Q48 20 50 44" fill="url(#footerRuby)"/>
+            <circle cx="50" cy="42" r="8" fill="#DC2626"/>
+            <circle cx="50" cy="42" r="4" fill="#F87171"/>
+          </svg>
           {SITE_TITLE}
         </a>
         <p class="text-sm text-base-content/60 max-w-sm leading-relaxed">

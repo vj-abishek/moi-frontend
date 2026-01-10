@@ -6,8 +6,27 @@ const currentPath = Astro.url.pathname;
 
 <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-base-100/80 border-b border-base-300">
   <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="/" class="text-xl font-bold tracking-tight hover:text-primary transition-colors font-sans flex items-center gap-2">
-      <span class="text-primary">●</span>
+    <a href="/" class="text-xl font-bold tracking-tight hover:opacity-80 transition-opacity font-sans flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-8 h-8">
+        <defs>
+          <linearGradient id="headerSunGold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#FCD34D"/>
+            <stop offset="50%" style="stop-color:#F59E0B"/>
+            <stop offset="100%" style="stop-color:#D97706"/>
+          </linearGradient>
+          <linearGradient id="headerRuby" x1="50%" y1="0%" x2="50%" y2="100%">
+            <stop offset="0%" style="stop-color:#F87171"/>
+            <stop offset="100%" style="stop-color:#DC2626"/>
+          </linearGradient>
+        </defs>
+        <rect x="8" y="8" width="84" height="84" rx="20" fill="url(#headerSunGold)"/>
+        <path d="M44 8 L44 92 L56 92 L56 8 Z" fill="url(#headerRuby)"/>
+        <path d="M8 44 L92 44 L92 56 L8 56 Z" fill="url(#headerRuby)"/>
+        <path d="M50 44 Q28 44 24 28 Q20 12 36 16 Q52 20 50 44" fill="url(#headerRuby)"/>
+        <path d="M50 44 Q72 44 76 28 Q80 12 64 16 Q48 20 50 44" fill="url(#headerRuby)"/>
+        <circle cx="50" cy="42" r="8" fill="#DC2626"/>
+        <circle cx="50" cy="42" r="4" fill="#F87171"/>
+      </svg>
       {SITE_TITLE}
     </a>
     
@@ -32,7 +51,7 @@ const currentPath = Astro.url.pathname;
       
       <a 
         href="/signup"
-        class="px-5 py-2.5 bg-primary text-primary-content text-xs uppercase tracking-widest font-semibold hover:bg-primary/90 transition-all "
+        class="px-5 py-2.5 bg-primary text-primary-content text-xs uppercase tracking-widest font-semibold hover:bg-primary/90 transition-all"
       >
         Get Started
       </a>
