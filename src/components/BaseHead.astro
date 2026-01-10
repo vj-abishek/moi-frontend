@@ -18,7 +18,7 @@ const { title, description, image } = Astro.props;
 
 // Default OG image - static file in public folder
 // NOTE: For best compatibility across all platforms, convert og.svg to og.png (1200x630px)
-const DEFAULT_OG_IMAGE = '/og.svg';
+const DEFAULT_OG_IMAGE = '/og.png';
 
 // Resolve image URL: handle ImageMetadata objects, string paths, or use default
 function getImageUrl(img: ImageMetadata | string | undefined): string {
