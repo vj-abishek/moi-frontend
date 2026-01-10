@@ -1,0 +1,230 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout title="FAQ" description="Everything you need to know about using Moi - frequently asked questions.">
+  <div class="max-w-4xl mx-auto px-6 py-16 md:py-24">
+    <!-- Hero -->
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-primary/10 mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+        </svg>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Frequently Asked Questions</h1>
+      <p class="text-xl text-base-content/60 max-w-2xl mx-auto">
+        Everything you need to know about using Moi
+      </p>
+    </div>
+
+    <!-- FAQ Sections -->
+    <div class="space-y-12">
+      <!-- Getting Started -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+          <span class="w-8 h-8 bg-primary/10 flex items-center justify-center text-primary text-sm font-bold">1</span>
+          Getting Started
+        </h2>
+        <div class="space-y-4">
+          <details class="group bg-base-200/50 border border-base-300">
+            <summary class="cursor-pointer p-4 font-medium flex items-center justify-between">
+              What is Moi?
+              <svg class="w-5 h-5 text-base-content/40 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-base-content/60">
+              Moi (மொய்) is a traditional practice in South India where guests give monetary gifts at celebrations like weddings, birthdays, and housewarmings. Our app helps event hosts collect, track, and manage these contributions digitally - whether through UPI payments, cash, or physical gifts.
+            </div>
+          </details>
+
+          <details class="group bg-base-200/50 border border-base-300">
+            <summary class="cursor-pointer p-4 font-medium flex items-center justify-between">
+              How do I create an event?
+              <svg class="w-5 h-5 text-base-content/40 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-base-content/60">
+              Simply sign in with Google or your email, and click "New Event" on your dashboard. Give your event a name (like "Ram & Sita's Wedding"), add recipients who will receive contributions, and share your unique link with guests.
+            </div>
+          </details>
+
+          <details class="group bg-base-200/50 border border-base-300">
+            <summary class="cursor-pointer p-4 font-medium flex items-center justify-between">
+              Is it free to use?
+              <svg class="w-5 h-5 text-base-content/40 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-base-content/60">
+              Yes! Moi is completely free for personal use. We don't charge any fees for creating events, collecting contributions, or accessing your data.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- For Event Hosts -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+          <span class="w-8 h-8 bg-secondary/10 flex items-center justify-center text-secondary text-sm font-bold">2</span>
+          For Event Hosts
+        </h2>
+        <div class="space-y-4">
+          <details class="group bg-base-200/50 border border-base-300">
+            <summary class="cursor-pointer p-4 font-medium flex items-center justify-between">
+              How do guests contribute?
+              <svg class="w-5 h-5 text-base-content/40 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-base-content/60">
+              Share your event link with guests (via WhatsApp, SMS, or QR code). They can enter their contribution details, choose a recipient, and either pay via UPI or mark their contribution as cash/gift. You'll see all entries in real-time on your dashboard.
+            </div>
+          </details>
+
+          <details class="group bg-base-200/50 border border-base-300">
+            <summary class="cursor-pointer p-4 font-medium flex items-center justify-between">
+              Can I have multiple recipients?
+              <svg class="w-5 h-5 text-base-content/40 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-base-content/60">
+              Absolutely! Add as many recipients as you need. For example, for a wedding, you might have both the bride and groom as separate recipients. Guests can choose who they want to give to.
+            </div>
+          </details>
+
+          <details class="group bg-base-200/50 border border-base-300">
+            <summary class="cursor-pointer p-4 font-medium flex items-center justify-between">
+              How do I track contributions?
+              <svg class="w-5 h-5 text-base-content/40 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-base-content/60">
+              Your dashboard shows all contributions in real-time with live analytics. You can see totals by recipient, filter by status (confirmed/pending), and export everything to a spreadsheet for your records.
+            </div>
+          </details>
+
+          <details class="group bg-base-200/50 border border-base-300">
+            <summary class="cursor-pointer p-4 font-medium flex items-center justify-between">
+              Can I add admins to help manage?
+              <svg class="w-5 h-5 text-base-content/40 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-base-content/60">
+              Yes! You can invite other people as admins to help manage your event. They'll be able to view and edit contributions, but only you (the owner) can delete the event.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- For Contributors -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+          <span class="w-8 h-8 bg-accent/10 flex items-center justify-center text-accent text-sm font-bold">3</span>
+          For Contributors
+        </h2>
+        <div class="space-y-4">
+          <details class="group bg-base-200/50 border border-base-300">
+            <summary class="cursor-pointer p-4 font-medium flex items-center justify-between">
+              Do I need to create an account?
+              <svg class="w-5 h-5 text-base-content/40 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-base-content/60">
+              You can record a contribution without an account, but signing in lets you track all your contributions across events, get email receipts, and have a permanent record of your giving history.
+            </div>
+          </details>
+
+          <details class="group bg-base-200/50 border border-base-300">
+            <summary class="cursor-pointer p-4 font-medium flex items-center justify-between">
+              How do I pay via UPI?
+              <svg class="w-5 h-5 text-base-content/40 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-base-content/60">
+              When you submit your contribution, you'll see the recipient's UPI QR code. Scan it with any UPI app (GPay, PhonePe, Paytm, etc.), complete the payment, and your contribution will be recorded automatically.
+            </div>
+          </details>
+
+          <details class="group bg-base-200/50 border border-base-300">
+            <summary class="cursor-pointer p-4 font-medium flex items-center justify-between">
+              What if I'm giving cash or a physical gift?
+              <svg class="w-5 h-5 text-base-content/40 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-base-content/60">
+              Select "Cash" or "Other Gift" as your payment type. Describe what you're giving, and the event host will mark it as received when you hand it over in person.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Privacy & Security -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+          <span class="w-8 h-8 bg-success/10 flex items-center justify-center text-success text-sm font-bold">4</span>
+          Privacy & Security
+        </h2>
+        <div class="space-y-4">
+          <details class="group bg-base-200/50 border border-base-300">
+            <summary class="cursor-pointer p-4 font-medium flex items-center justify-between">
+              Is my data secure?
+              <svg class="w-5 h-5 text-base-content/40 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-base-content/60">
+              Yes! All connections use HTTPS encryption. We use secure, passwordless authentication (magic links and Google OAuth). Read our <a href="/trust" class="text-primary hover:underline">Trust & Security</a> page for details.
+            </div>
+          </details>
+
+          <details class="group bg-base-200/50 border border-base-300">
+            <summary class="cursor-pointer p-4 font-medium flex items-center justify-between">
+              Who can see my contributions?
+              <svg class="w-5 h-5 text-base-content/40 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-base-content/60">
+              Only you and the event host/admins can see your contribution details. We never share your information with third parties for advertising.
+            </div>
+          </details>
+
+          <details class="group bg-base-200/50 border border-base-300">
+            <summary class="cursor-pointer p-4 font-medium flex items-center justify-between">
+              Can I delete my data?
+              <svg class="w-5 h-5 text-base-content/40 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-base-content/60">
+              Yes! You can request deletion of your account and all associated data at any time. <a href="/support" class="text-primary hover:underline">Contact support</a> to request this.
+            </div>
+          </details>
+        </div>
+      </section>
+    </div>
+
+    <!-- Still have questions? -->
+    <div class="mt-16 p-8 bg-gradient-to-r from-primary/5 to-secondary/5 border border-base-300 text-center">
+      <h2 class="text-2xl font-bold mb-2">Still have questions?</h2>
+      <p class="text-base-content/60 mb-6">
+        We're happy to help! Reach out to our support team.
+      </p>
+      <a href="/support" class="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-content text-sm uppercase tracking-widest font-semibold hover:bg-primary/90 transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+        </svg>
+        Contact Support
+      </a>
+    </div>
+  </div>
+</PageLayout>
+
