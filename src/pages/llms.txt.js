@@ -32,7 +32,7 @@ Moi is a web application designed for tracking gift contributions during Indian 
 
 - Built with Ruby on Rails
 - Real-time updates via ActionCable (WebSockets)
-- SQLite database with Litestream backups
+- PostgreSQL database
 - Deployed on Fly.io
 
 ## Routes & Authentication
