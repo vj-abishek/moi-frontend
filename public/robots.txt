@@ -5,7 +5,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://moi.abs.wiki/sitemap-index.xml
+Sitemap: https://getmoi.in/sitemap-index.xml
 
 # LLM-specific
 Allow: /llms.txt

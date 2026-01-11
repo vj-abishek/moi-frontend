@@ -10,7 +10,12 @@ import cloudflare from '@astrojs/cloudflare';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://getmoi.in',
-  integrations: [mdx(), sitemap()],
+  integrations: [
+    mdx(),
+    sitemap({
+      customPages: ['https://app.getmoi.in/signup'],
+    }),
+  ],
 
   vite: {
       plugins: [tailwindcss()],
