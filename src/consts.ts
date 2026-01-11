@@ -31,6 +31,7 @@ export const FOOTER_LINKS: { product: FooterLink[]; company: FooterLink[]; legal
     { href: '/trust', label: 'Trust' },
     { href: '/faq', label: 'FAQ' },
     { href: '/support', label: 'Support' },
+    { href: '/troubleshooting', label: 'Troubleshooting' },
   ],
   legal: [
     { href: '/privacy', label: 'Privacy' },
