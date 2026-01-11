@@ -48,6 +48,7 @@ Most routes require authentication. Only specific public routes are accessible w
 - ${siteUrl}terms - Terms of Service
 - ${siteUrl}support - Contact Support
 - ${siteUrl}faq - Frequently Asked Questions
+- ${siteUrl}troubleshooting - UPI payment troubleshooting guide
 - ${siteUrl}blog - Blog posts
 - ${siteUrl}robots.txt - Robots file for crawlers
 - ${siteUrl}llms.txt - This file
@@ -69,6 +70,22 @@ The main application is hosted at ${appSiteUrl}
 - Google OAuth for authentication
 - UPI deep links for payment initiation
 - QR code generation for easy sharing
+
+## UPI Payment Troubleshooting
+
+Some UPI apps enforce limits when opened via deeplinks (upi:// URLs):
+
+### Known Limitations
+- **Google Pay**: Blocks payments above ₹2,000 via deeplink
+- **BHIM**: Won't load payment interface at all via deeplink
+- **Paytm**: No restrictions - works for any amount
+
+### Solutions for Payments Above ₹2,000
+1. **Download & Load QR**: Save the QR code image, open your UPI app, use "Scan from Gallery" to load it
+2. **Scan from Another Device**: Display QR on laptop/another phone, scan with your UPI app camera
+
+### Why This Happens
+UPI apps add client-side validation for deeplink payments as a security measure. When scanning QR directly or loading from gallery, these restrictions don't apply - only your bank's UPI limit matters (usually ₹1,00,000/day).
 
 ## Contact
 
