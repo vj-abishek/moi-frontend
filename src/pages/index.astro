@@ -17,20 +17,12 @@ const signupUrl = getAppUrl('/signup', Astro.url);
     
     <main class="flex-1">
       <!-- Hero Section -->
-      <section class="relative overflow-hidden min-h-[90vh] flex items-center">
-        <!-- Decorative geometric pattern inspired by rangoli -->
-        <div class="absolute inset-0 overflow-hidden">
-          <div class="absolute top-1/4 -left-20 w-96 h-96 border border-primary/10 "></div>
-          <div class="absolute top-1/3 -left-10 w-72 h-72 border border-primary/5 "></div>
-          <div class="absolute bottom-1/4 -right-20 w-[500px] h-[500px] border border-primary/10 "></div>
-          <div class="absolute bottom-1/3 -right-10 w-80 h-80 border border-primary/5 "></div>
-          <div class="absolute top-20 right-1/4 w-4 h-4 bg-primary/20 "></div>
-          <div class="absolute bottom-32 left-1/4 w-3 h-3 bg-primary/30 "></div>
-          <div class="absolute top-1/2 left-1/3 w-2 h-2 bg-primary/20 "></div>
-        </div>
+      <section id="hero-section" class="relative overflow-hidden min-h-[90vh] flex items-center">
+        <!-- Subtle gradient base -->
+        <div class="absolute inset-0 bg-gradient-to-br from-base-100 via-base-100 to-base-100/95"></div>
         
-        <!-- Gradient overlay -->
-        <div class="absolute inset-0 bg-gradient-to-br from-base-100 via-base-100/95 to-base-100/90"></div>
+        <!-- Interactive dot grid canvas - on top of gradient -->
+        <canvas id="dot-grid" class="absolute inset-0 w-full h-full z-[1] pointer-events-none"></canvas>
         
         <div class="max-w-6xl mx-auto px-6 py-20 relative z-10">
           <div class="max-w-3xl space-y-8">
@@ -216,69 +208,68 @@ const signupUrl = getAppUrl('/signup', Astro.url);
           <div class="relative max-w-4xl mx-auto">
             <!-- Before Mockup -->
             <div id="mockup-before" class="mockup-panel">
-              <div class="relative bg-amber-100 border-2 border-amber-400 shadow-xl p-6 md:p-8 rotate-[-0.5deg] rounded-sm">
+              <div class="relative bg-amber-100 border-2 border-amber-400 shadow-xl p-4 md:p-8 rotate-[-0.5deg] rounded-sm">
                 <!-- Notebook lines background -->
-                <div class="absolute inset-0 opacity-30" style="background-image: repeating-linear-gradient(transparent, transparent 27px, #b45309 28px);"></div>
+                <div class="absolute inset-0 opacity-30" style="background-image: repeating-linear-gradient(transparent, transparent 23px, #b45309 24px);"></div>
                 
                 <div class="relative">
                   <!-- Header -->
-                  <div class="mb-6 pb-3 border-b-2 border-amber-500">
-                    <h3 class="text-2xl text-amber-950 font-bold" style="font-family: 'Segoe Script', 'Bradley Hand', cursive;">
+                  <div class="mb-4 md:mb-6 pb-2 md:pb-3 border-b-2 border-amber-500">
+                    <h3 class="text-lg md:text-2xl text-amber-950 font-bold" style="font-family: 'Segoe Script', 'Bradley Hand', cursive;">
                       Wedding Moi List
                     </h3>
                   </div>
                   
                   <!-- Messy entries -->
-                  <div class="space-y-4 text-amber-950" style="font-family: 'Segoe Script', 'Bradley Hand', cursive;">
-                    <div class="flex justify-between items-center">
-                      <span class="text-lg">Ravi anna</span>
-                      <span>₹5000 <span class="text-red-700 text-sm font-medium">(cash or UPI??)</span></span>
+                  <div class="space-y-2 md:space-y-4 text-amber-950 text-sm md:text-base" style="font-family: 'Segoe Script', 'Bradley Hand', cursive;">
+                    <div class="flex justify-between items-center gap-2">
+                      <span>Ravi anna</span>
+                      <span class="text-right">₹5000 <span class="text-red-700 text-xs md:text-sm font-medium">(cash??)</span></span>
                     </div>
-                    <div class="flex justify-between items-center line-through opacity-60">
-                      <span class="text-lg">Kumar mama</span>
-                      <span>₹??? <span class="text-xs">(lost slip)</span></span>
+                    <div class="flex justify-between items-center gap-2 line-through opacity-60">
+                      <span>Kumar mama</span>
+                      <span class="text-right">₹??? <span class="text-xs">(lost)</span></span>
                     </div>
-                    <div class="flex justify-between items-center">
-                      <span class="text-lg">Lakshmi aunty</span>
-                      <span class="text-amber-800">gold chain or ₹2000?</span>
+                    <div class="flex justify-between items-center gap-2">
+                      <span>Lakshmi aunty</span>
+                      <span class="text-amber-800 text-right text-xs md:text-sm">gold or ₹2000?</span>
                     </div>
-                    <div class="flex justify-between items-center relative">
-                      <span class="text-lg">Suresh</span>
+                    <div class="flex justify-between items-center gap-2 relative">
+                      <span>Suresh</span>
                       <span>₹2500</span>
-                      <span class="absolute -right-2 top-0 text-amber-700 opacity-50 text-3xl">~</span>
                     </div>
-                    <div class="text-center pt-4 text-amber-700 italic">
-                      ... 47 more names somewhere ...
+                    <div class="text-center pt-2 md:pt-4 text-amber-700 italic text-xs md:text-sm">
+                      ... 47 more names ...
                     </div>
                   </div>
                   
                   <!-- Chaotic footer -->
-                  <div class="mt-8 pt-4 border-t-2 border-dashed border-amber-500">
-                    <div class="flex justify-between items-center">
-                      <span class="text-xl text-amber-950 font-bold" style="font-family: 'Segoe Script', 'Bradley Hand', cursive;">Total: ₹???,???</span>
-                      <span class="text-red-700 text-sm font-medium">Need to recount!</span>
+                  <div class="mt-4 md:mt-8 pt-3 md:pt-4 border-t-2 border-dashed border-amber-500">
+                    <div class="flex justify-between items-center gap-2">
+                      <span class="text-base md:text-xl text-amber-950 font-bold" style="font-family: 'Segoe Script', 'Bradley Hand', cursive;">Total: ₹???,???</span>
+                      <span class="text-red-700 text-xs md:text-sm font-medium">Recount!</span>
                     </div>
                   </div>
                 </div>
               </div>
 
               <!-- Pain points -->
-              <div class="mt-8 flex flex-wrap justify-center gap-3">
-                <span class="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-500 text-sm font-medium rounded-full border border-red-500/20">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+              <div class="mt-6 md:mt-8 flex flex-wrap justify-center gap-2 md:gap-3">
+                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-red-500/10 text-red-500 text-xs md:text-sm font-medium rounded-full border border-red-500/20">
+                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                   Lost records
                 </span>
-                <span class="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-500 text-sm font-medium rounded-full border border-red-500/20">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-red-500/10 text-red-500 text-xs md:text-sm font-medium rounded-full border border-red-500/20">
+                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                   Manual counting
                 </span>
-                <span class="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-500 text-sm font-medium rounded-full border border-red-500/20">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-red-500/10 text-red-500 text-xs md:text-sm font-medium rounded-full border border-red-500/20">
+                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                   No backup
                 </span>
-                <span class="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-500 text-sm font-medium rounded-full border border-red-500/20">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                  Endless confusion
+                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-red-500/10 text-red-500 text-xs md:text-sm font-medium rounded-full border border-red-500/20">
+                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                  Confusion
                 </span>
               </div>
             </div>
@@ -287,65 +278,65 @@ const signupUrl = getAppUrl('/signup', Astro.url);
             <div id="mockup-after" class="mockup-panel absolute inset-0 opacity-0 pointer-events-none">
               <div class="bg-stone-100 border border-stone-300 shadow-2xl overflow-hidden rounded-sm">
                 <!-- Header -->
-                <div class="bg-stone-50 px-6 py-4 border-b border-stone-200 flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-amber-500/20 flex items-center justify-center">
-                      <span class="text-amber-600 font-bold text-sm">M</span>
+                <div class="bg-stone-50 px-4 md:px-6 py-3 md:py-4 border-b border-stone-200 flex items-center justify-between">
+                  <div class="flex items-center gap-2 md:gap-3">
+                    <div class="w-7 h-7 md:w-8 md:h-8 bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                      <span class="text-amber-600 font-bold text-xs md:text-sm">M</span>
                     </div>
-                    <div>
-                      <p class="font-semibold text-sm text-stone-900">Arun & Priya's Wedding</p>
-                      <p class="text-xs text-stone-500">getmoi.in/arun-priya</p>
+                    <div class="min-w-0">
+                      <p class="font-semibold text-xs md:text-sm text-stone-900 truncate">Arun & Priya's Wedding</p>
+                      <p class="text-[10px] md:text-xs text-stone-500">getmoi.in/arun-priya</p>
                     </div>
                   </div>
-                  <div class="flex items-center gap-2">
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
                     <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    <span class="text-xs text-stone-500">Live</span>
+                    <span class="text-[10px] md:text-xs text-stone-500">Live</span>
                   </div>
                 </div>
                 
                 <!-- Stats -->
-                <div class="p-6">
-                  <div class="grid grid-cols-3 gap-4 mb-6">
-                    <div class="bg-stone-50 border border-stone-200 p-4">
-                      <p class="text-xs text-stone-500 mb-1">Total Collected</p>
-                      <p class="text-xl md:text-2xl font-bold text-stone-900">₹2,45,000</p>
+                <div class="p-3 md:p-6">
+                  <div class="grid grid-cols-3 gap-2 md:gap-4 mb-4 md:mb-6">
+                    <div class="bg-stone-50 border border-stone-200 p-2 md:p-4">
+                      <p class="text-[10px] md:text-xs text-stone-500 mb-0.5 md:mb-1">Total</p>
+                      <p class="text-sm md:text-2xl font-bold text-stone-900">₹2.45L</p>
                     </div>
-                    <div class="bg-stone-50 border border-stone-200 p-4">
-                      <p class="text-xs text-stone-500 mb-1">Contributors</p>
-                      <p class="text-xl md:text-2xl font-bold text-stone-900">127</p>
+                    <div class="bg-stone-50 border border-stone-200 p-2 md:p-4">
+                      <p class="text-[10px] md:text-xs text-stone-500 mb-0.5 md:mb-1">Contributors</p>
+                      <p class="text-sm md:text-2xl font-bold text-stone-900">127</p>
                     </div>
-                    <div class="bg-stone-50 border border-stone-200 p-4">
-                      <p class="text-xs text-stone-500 mb-1">Confirmed</p>
-                      <p class="text-xl md:text-2xl font-bold text-green-700">98%</p>
+                    <div class="bg-stone-50 border border-stone-200 p-2 md:p-4">
+                      <p class="text-[10px] md:text-xs text-stone-500 mb-0.5 md:mb-1">Confirmed</p>
+                      <p class="text-sm md:text-2xl font-bold text-green-700">98%</p>
                     </div>
                   </div>
                   
                   <!-- Table -->
-                  <div class="border border-stone-200 overflow-hidden bg-stone-50">
-                    <div class="bg-stone-100 px-4 py-2 text-xs font-semibold text-stone-600 grid grid-cols-4 gap-4 border-b border-stone-200">
+                  <div class="border border-stone-200 overflow-hidden bg-stone-50 text-xs md:text-sm">
+                    <div class="bg-stone-100 px-2 md:px-4 py-2 font-semibold text-stone-600 grid grid-cols-[1fr_auto_auto] md:grid-cols-4 gap-2 md:gap-4 border-b border-stone-200">
                       <span>Name</span>
                       <span>Amount</span>
-                      <span>Type</span>
+                      <span class="hidden md:block">Type</span>
                       <span>Status</span>
                     </div>
                     <div class="divide-y divide-stone-200 bg-stone-50">
-                      <div class="px-4 py-3 grid grid-cols-4 gap-4 items-center text-sm text-stone-800">
-                        <span>Ravi Kumar</span>
+                      <div class="px-2 md:px-4 py-2 md:py-3 grid grid-cols-[1fr_auto_auto] md:grid-cols-4 gap-2 md:gap-4 items-center text-stone-800">
+                        <span class="truncate">Ravi Kumar</span>
                         <span class="font-medium">₹5,000</span>
-                        <span class="px-2 py-0.5 bg-cyan-100 text-cyan-700 text-xs w-fit rounded">UPI</span>
-                        <span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs w-fit rounded">Confirmed</span>
+                        <span class="hidden md:block px-2 py-0.5 bg-cyan-100 text-cyan-700 text-xs w-fit rounded">UPI</span>
+                        <span class="px-1.5 md:px-2 py-0.5 bg-green-100 text-green-700 text-[10px] md:text-xs w-fit rounded">Confirmed</span>
                       </div>
-                      <div class="px-4 py-3 grid grid-cols-4 gap-4 items-center text-sm text-stone-800">
-                        <span>Lakshmi Devi</span>
+                      <div class="px-2 md:px-4 py-2 md:py-3 grid grid-cols-[1fr_auto_auto] md:grid-cols-4 gap-2 md:gap-4 items-center text-stone-800">
+                        <span class="truncate">Lakshmi Devi</span>
                         <span class="font-medium">₹2,500</span>
-                        <span class="px-2 py-0.5 bg-amber-100 text-amber-700 text-xs w-fit rounded">Gift</span>
-                        <span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs w-fit rounded">Confirmed</span>
+                        <span class="hidden md:block px-2 py-0.5 bg-amber-100 text-amber-700 text-xs w-fit rounded">Gift</span>
+                        <span class="px-1.5 md:px-2 py-0.5 bg-green-100 text-green-700 text-[10px] md:text-xs w-fit rounded">Confirmed</span>
                       </div>
-                      <div class="px-4 py-3 grid grid-cols-4 gap-4 items-center text-sm text-stone-800">
-                        <span>Suresh Babu</span>
+                      <div class="px-2 md:px-4 py-2 md:py-3 grid grid-cols-[1fr_auto_auto] md:grid-cols-4 gap-2 md:gap-4 items-center text-stone-800">
+                        <span class="truncate">Suresh Babu</span>
                         <span class="font-medium">₹3,000</span>
-                        <span class="px-2 py-0.5 bg-cyan-100 text-cyan-700 text-xs w-fit rounded">UPI</span>
-                        <span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs w-fit rounded">Confirmed</span>
+                        <span class="hidden md:block px-2 py-0.5 bg-cyan-100 text-cyan-700 text-xs w-fit rounded">UPI</span>
+                        <span class="px-1.5 md:px-2 py-0.5 bg-green-100 text-green-700 text-[10px] md:text-xs w-fit rounded">Confirmed</span>
                       </div>
                     </div>
                   </div>
@@ -353,22 +344,22 @@ const signupUrl = getAppUrl('/signup', Astro.url);
               </div>
 
               <!-- Benefits -->
-              <div class="mt-8 flex flex-wrap justify-center gap-3">
-                <span class="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 text-green-500 text-sm font-medium rounded-full border border-green-500/20">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  Real-time tracking
+              <div class="mt-6 md:mt-8 flex flex-wrap justify-center gap-2 md:gap-3">
+                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-green-500/10 text-green-500 text-xs md:text-sm font-medium rounded-full border border-green-500/20">
+                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  Real-time
                 </span>
-                <span class="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 text-green-500 text-sm font-medium rounded-full border border-green-500/20">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  Instant export
+                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-green-500/10 text-green-500 text-xs md:text-sm font-medium rounded-full border border-green-500/20">
+                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  Export CSV
                 </span>
-                <span class="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 text-green-500 text-sm font-medium rounded-full border border-green-500/20">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  Never lose data
+                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-green-500/10 text-green-500 text-xs md:text-sm font-medium rounded-full border border-green-500/20">
+                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  Cloud saved
                 </span>
-                <span class="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 text-green-500 text-sm font-medium rounded-full border border-green-500/20">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  Auto calculations
+                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-green-500/10 text-green-500 text-xs md:text-sm font-medium rounded-full border border-green-500/20">
+                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  Auto totals
                 </span>
               </div>
             </div>
@@ -481,52 +472,67 @@ const signupUrl = getAppUrl('/signup', Astro.url);
             </div>
             
             <div class="relative">
-              <!-- Decorative card mockup -->
-              <div class="bg-base-100 border border-base-300  p-8 shadow-2xl shadow-primary/5">
-                <div class="flex items-center gap-3 mb-6">
-                  <div class="w-10 h-10 bg-primary/20  flex items-center justify-center">
-                    <span class="text-primary font-bold">A</span>
+              <!-- Phone mockup showing magic link -->
+              <div class="bg-base-200/50 border border-base-300 p-6 md:p-8 max-w-sm mx-auto">
+                <!-- Phone frame -->
+                <div class="bg-base-100 border border-base-300 rounded-2xl overflow-hidden shadow-xl">
+                  <!-- Phone notch -->
+                  <div class="h-6 bg-base-200 flex items-center justify-center">
+                    <div class="w-20 h-4 bg-base-300 rounded-full"></div>
                   </div>
-                  <div>
-                    <p class="font-semibold">Arun & Priya's Wedding</p>
-                    <p class="text-sm text-base-content/50">Live now</p>
-                  </div>
-                  <div class="ml-auto flex items-center gap-1">
-                    <span class="w-2 h-2 bg-green-500  animate-pulse"></span>
-                    <span class="text-sm text-base-content/50">Real-time</span>
+                  
+                  <!-- Email app mockup -->
+                  <div class="p-4 space-y-4">
+                    <div class="flex items-center gap-2 text-xs text-base-content/50">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                      </svg>
+                      <span>Inbox</span>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div class="bg-primary/5 border border-primary/20 rounded-lg p-4 space-y-3">
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                          <span class="text-primary text-xs font-bold">M</span>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                          <p class="font-semibold text-sm truncate">Moi</p>
+                          <p class="text-xs text-base-content/50">Sign in to your account</p>
+                        </div>
+                        <span class="text-xs text-base-content/40">now</span>
+                      </div>
+                      
+                      <div class="text-sm text-base-content/70">
+                        Click below to sign in. No password needed!
+                      </div>
+                      
+                      <button class="w-full py-2.5 bg-primary text-primary-content text-sm font-semibold rounded-lg">
+                        Sign in to Moi →
+                      </button>
+                      
+                      <p class="text-[10px] text-base-content/40 text-center">
+                        Link expires in 15 minutes
+                      </p>
+                    </div>
+                    
+                    <!-- Other emails (faded) -->
+                    <div class="opacity-30 space-y-2">
+                      <div class="h-12 bg-base-200 rounded-lg"></div>
+                      <div class="h-12 bg-base-200 rounded-lg"></div>
+                    </div>
                   </div>
                 </div>
                 
-                <div class="grid grid-cols-2 gap-4 mb-6">
-                  <div class="bg-base-200  p-4">
-                    <p class="text-sm text-base-content/50 mb-1">Total Collected</p>
-                    <p class="text-2xl font-bold text-primary">₹2,45,000</p>
-                  </div>
-                  <div class="bg-base-200  p-4">
-                    <p class="text-sm text-base-content/50 mb-1">Contributors</p>
-                    <p class="text-2xl font-bold">127</p>
-                  </div>
-                </div>
-                
-                <div class="space-y-3">
-                  <div class="flex items-center justify-between py-2 border-b border-base-300">
-                    <span class="text-base-content/70">Ravi Kumar</span>
-                    <span class="font-medium">₹5,000</span>
-                  </div>
-                  <div class="flex items-center justify-between py-2 border-b border-base-300">
-                    <span class="text-base-content/70">Lakshmi Devi</span>
-                    <span class="font-medium">₹2,500</span>
-                  </div>
-                  <div class="flex items-center justify-between py-2">
-                    <span class="text-base-content/70">Suresh Babu</span>
-                    <span class="font-medium">₹3,000</span>
-                  </div>
-                </div>
+                <!-- Caption -->
+                <p class="text-center text-sm text-base-content/50 mt-4">
+                  One click. You're in.
+                </p>
               </div>
               
               <!-- Decorative elements -->
-              <div class="absolute -top-4 -right-4 w-24 h-24 bg-primary/10  -z-10"></div>
-              <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-primary/5  -z-10"></div>
+              <div class="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 -z-10"></div>
+              <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-primary/5 -z-10"></div>
             </div>
           </div>
         </div>
@@ -562,5 +568,164 @@ const signupUrl = getAppUrl('/signup', Astro.url);
     </main>
 
     <Footer />
+
+    <script is:inline>
+      (function() {
+        const canvas = document.getElementById('dot-grid');
+        if (!canvas) return;
+        
+        const ctx = canvas.getContext('2d');
+        const heroSection = document.getElementById('hero-section');
+        
+        // Configuration - subtle base, punchy hover
+        const DOT_SPACING = 40;
+        const BASE_RADIUS = 1;
+        const MAX_RADIUS = 5;
+        const BASE_ALPHA = 0.08;
+        const MAX_ALPHA = 0.7;
+        const INFLUENCE_RADIUS = 120;
+        const LERP_FACTOR = 0.12;
+        
+        // Colors - gold/amber primary to match brand
+        const PRIMARY_COLOR = { r: 234, g: 179, b: 8 }; // Tailwind amber-500
+        const BASE_COLOR = { r: 255, g: 255, b: 255 };
+        
+        let mouseX = -1000;
+        let mouseY = -1000;
+        let dots = [];
+        let animationId = null;
+        let isVisible = true;
+        
+        function createDots() {
+          dots = [];
+          const cols = Math.ceil(canvas.width / DOT_SPACING) + 1;
+          const rows = Math.ceil(canvas.height / DOT_SPACING) + 1;
+          
+          for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+              dots.push({
+                x: col * DOT_SPACING,
+                y: row * DOT_SPACING,
+                currentRadius: BASE_RADIUS,
+                currentAlpha: BASE_ALPHA,
+                currentColor: { ...BASE_COLOR }
+              });
+            }
+          }
+        }
+        
+        function lerp(start, end, factor) {
+          return start + (end - start) * factor;
+        }
+        
+        function resizeCanvas() {
+          const rect = heroSection.getBoundingClientRect();
+          const dpr = window.devicePixelRatio || 1;
+          
+          canvas.width = rect.width * dpr;
+          canvas.height = rect.height * dpr;
+          canvas.style.width = rect.width + 'px';
+          canvas.style.height = rect.height + 'px';
+          
+          ctx.scale(dpr, dpr);
+          createDots();
+        }
+        
+        function updateDot(dot) {
+          const dx = mouseX - dot.x;
+          const dy = mouseY - dot.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          let targetRadius = BASE_RADIUS;
+          let targetAlpha = BASE_ALPHA;
+          let targetColor = { ...BASE_COLOR };
+          
+          if (distance < INFLUENCE_RADIUS) {
+            const influence = 1 - (distance / INFLUENCE_RADIUS);
+            const easedInfluence = influence * influence; // Quadratic easing
+            
+            targetRadius = BASE_RADIUS + (MAX_RADIUS - BASE_RADIUS) * easedInfluence;
+            targetAlpha = BASE_ALPHA + (MAX_ALPHA - BASE_ALPHA) * easedInfluence;
+            
+            // Blend toward primary color
+            targetColor = {
+              r: BASE_COLOR.r + (PRIMARY_COLOR.r - BASE_COLOR.r) * easedInfluence,
+              g: BASE_COLOR.g + (PRIMARY_COLOR.g - BASE_COLOR.g) * easedInfluence,
+              b: BASE_COLOR.b + (PRIMARY_COLOR.b - BASE_COLOR.b) * easedInfluence
+            };
+          }
+          
+          // Smooth interpolation
+          dot.currentRadius = lerp(dot.currentRadius, targetRadius, LERP_FACTOR);
+          dot.currentAlpha = lerp(dot.currentAlpha, targetAlpha, LERP_FACTOR);
+          dot.currentColor.r = lerp(dot.currentColor.r, targetColor.r, LERP_FACTOR);
+          dot.currentColor.g = lerp(dot.currentColor.g, targetColor.g, LERP_FACTOR);
+          dot.currentColor.b = lerp(dot.currentColor.b, targetColor.b, LERP_FACTOR);
+        }
+        
+        function drawDot(dot) {
+          const { r, g, b } = dot.currentColor;
+          ctx.beginPath();
+          ctx.arc(dot.x, dot.y, dot.currentRadius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)}, ${dot.currentAlpha})`;
+          ctx.fill();
+        }
+        
+        function animate() {
+          if (!isVisible) {
+            animationId = requestAnimationFrame(animate);
+            return;
+          }
+          
+          const rect = heroSection.getBoundingClientRect();
+          ctx.clearRect(0, 0, rect.width, rect.height);
+          
+          for (const dot of dots) {
+            updateDot(dot);
+            drawDot(dot);
+          }
+          
+          animationId = requestAnimationFrame(animate);
+        }
+        
+        function handleMouseMove(e) {
+          const rect = heroSection.getBoundingClientRect();
+          mouseX = e.clientX - rect.left;
+          mouseY = e.clientY - rect.top;
+        }
+        
+        function handleMouseLeave() {
+          mouseX = -1000;
+          mouseY = -1000;
+        }
+        
+        // Intersection Observer for performance
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach(entry => {
+              isVisible = entry.isIntersecting;
+            });
+          },
+          { threshold: 0 }
+        );
+        
+        // Initialize
+        resizeCanvas();
+        observer.observe(heroSection);
+        heroSection.addEventListener('mousemove', handleMouseMove);
+        heroSection.addEventListener('mouseleave', handleMouseLeave);
+        window.addEventListener('resize', resizeCanvas);
+        animate();
+        
+        // Cleanup on page navigation (for SPA)
+        document.addEventListener('astro:before-swap', function() {
+          if (animationId) cancelAnimationFrame(animationId);
+          observer.disconnect();
+          heroSection.removeEventListener('mousemove', handleMouseMove);
+          heroSection.removeEventListener('mouseleave', handleMouseLeave);
+          window.removeEventListener('resize', resizeCanvas);
+        });
+      })();
+    </script>
   </body>
 </html>
