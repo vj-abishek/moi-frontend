@@ -185,8 +185,249 @@ const signupUrl = getAppUrl('/signup', Astro.url);
         </div>
       </section>
 
+      <!-- Before vs After Comparison Section -->
+      <section id="compare" class="border-t border-base-300 bg-base-200/30 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 py-24 md:py-32">
+          <div class="text-center mb-12 space-y-4">
+            <p class="text-sm uppercase tracking-[0.2em] text-primary font-medium">
+              The Difference
+            </p>
+            <h2 class="text-4xl md:text-5xl font-bold">
+              Before & After Moi
+            </h2>
+            <p class="text-base-content/60 max-w-2xl mx-auto text-lg">
+              See how Moi transforms chaotic gift tracking into an organized, stress-free experience.
+            </p>
+          </div>
+
+          <!-- Toggle Switch -->
+          <div class="flex justify-center mb-10">
+            <label class="inline-flex items-center gap-4 px-6 py-3 bg-base-100 border border-base-300 cursor-pointer select-none rounded-lg">
+              <span id="label-before" class="text-sm font-semibold uppercase tracking-wider text-red-500">Before</span>
+              <div id="toggle-track" class="relative w-16 h-8 bg-red-500 rounded-full transition-colors duration-300">
+                <input type="checkbox" id="compare-toggle" class="sr-only" />
+                <div id="toggle-thumb" class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300"></div>
+              </div>
+              <span id="label-after" class="text-sm font-semibold uppercase tracking-wider text-base-content/40">After</span>
+            </label>
+          </div>
+
+          <!-- Mockups Container -->
+          <div class="relative max-w-4xl mx-auto">
+            <!-- Before Mockup -->
+            <div id="mockup-before" class="mockup-panel">
+              <div class="relative bg-amber-100 border-2 border-amber-400 shadow-xl p-6 md:p-8 rotate-[-0.5deg] rounded-sm">
+                <!-- Notebook lines background -->
+                <div class="absolute inset-0 opacity-30" style="background-image: repeating-linear-gradient(transparent, transparent 27px, #b45309 28px);"></div>
+                
+                <div class="relative">
+                  <!-- Header -->
+                  <div class="mb-6 pb-3 border-b-2 border-amber-500">
+                    <h3 class="text-2xl text-amber-950 font-bold" style="font-family: 'Segoe Script', 'Bradley Hand', cursive;">
+                      Wedding Moi List
+                    </h3>
+                  </div>
+                  
+                  <!-- Messy entries -->
+                  <div class="space-y-4 text-amber-950" style="font-family: 'Segoe Script', 'Bradley Hand', cursive;">
+                    <div class="flex justify-between items-center">
+                      <span class="text-lg">Ravi anna</span>
+                      <span>₹5000 <span class="text-red-700 text-sm font-medium">(cash or UPI??)</span></span>
+                    </div>
+                    <div class="flex justify-between items-center line-through opacity-60">
+                      <span class="text-lg">Kumar mama</span>
+                      <span>₹??? <span class="text-xs">(lost slip)</span></span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-lg">Lakshmi aunty</span>
+                      <span class="text-amber-800">gold chain or ₹2000?</span>
+                    </div>
+                    <div class="flex justify-between items-center relative">
+                      <span class="text-lg">Suresh</span>
+                      <span>₹2500</span>
+                      <span class="absolute -right-2 top-0 text-amber-700 opacity-50 text-3xl">~</span>
+                    </div>
+                    <div class="text-center pt-4 text-amber-700 italic">
+                      ... 47 more names somewhere ...
+                    </div>
+                  </div>
+                  
+                  <!-- Chaotic footer -->
+                  <div class="mt-8 pt-4 border-t-2 border-dashed border-amber-500">
+                    <div class="flex justify-between items-center">
+                      <span class="text-xl text-amber-950 font-bold" style="font-family: 'Segoe Script', 'Bradley Hand', cursive;">Total: ₹???,???</span>
+                      <span class="text-red-700 text-sm font-medium">Need to recount!</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pain points -->
+              <div class="mt-8 flex flex-wrap justify-center gap-3">
+                <span class="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-500 text-sm font-medium rounded-full border border-red-500/20">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                  Lost records
+                </span>
+                <span class="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-500 text-sm font-medium rounded-full border border-red-500/20">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                  Manual counting
+                </span>
+                <span class="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-500 text-sm font-medium rounded-full border border-red-500/20">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                  No backup
+                </span>
+                <span class="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-500 text-sm font-medium rounded-full border border-red-500/20">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                  Endless confusion
+                </span>
+              </div>
+            </div>
+
+            <!-- After Mockup -->
+            <div id="mockup-after" class="mockup-panel absolute inset-0 opacity-0 pointer-events-none">
+              <div class="bg-stone-100 border border-stone-300 shadow-2xl overflow-hidden rounded-sm">
+                <!-- Header -->
+                <div class="bg-stone-50 px-6 py-4 border-b border-stone-200 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-amber-500/20 flex items-center justify-center">
+                      <span class="text-amber-600 font-bold text-sm">M</span>
+                    </div>
+                    <div>
+                      <p class="font-semibold text-sm text-stone-900">Arun & Priya's Wedding</p>
+                      <p class="text-xs text-stone-500">getmoi.in/arun-priya</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-xs text-stone-500">Live</span>
+                  </div>
+                </div>
+                
+                <!-- Stats -->
+                <div class="p-6">
+                  <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="bg-stone-50 border border-stone-200 p-4">
+                      <p class="text-xs text-stone-500 mb-1">Total Collected</p>
+                      <p class="text-xl md:text-2xl font-bold text-stone-900">₹2,45,000</p>
+                    </div>
+                    <div class="bg-stone-50 border border-stone-200 p-4">
+                      <p class="text-xs text-stone-500 mb-1">Contributors</p>
+                      <p class="text-xl md:text-2xl font-bold text-stone-900">127</p>
+                    </div>
+                    <div class="bg-stone-50 border border-stone-200 p-4">
+                      <p class="text-xs text-stone-500 mb-1">Confirmed</p>
+                      <p class="text-xl md:text-2xl font-bold text-green-700">98%</p>
+                    </div>
+                  </div>
+                  
+                  <!-- Table -->
+                  <div class="border border-stone-200 overflow-hidden bg-stone-50">
+                    <div class="bg-stone-100 px-4 py-2 text-xs font-semibold text-stone-600 grid grid-cols-4 gap-4 border-b border-stone-200">
+                      <span>Name</span>
+                      <span>Amount</span>
+                      <span>Type</span>
+                      <span>Status</span>
+                    </div>
+                    <div class="divide-y divide-stone-200 bg-stone-50">
+                      <div class="px-4 py-3 grid grid-cols-4 gap-4 items-center text-sm text-stone-800">
+                        <span>Ravi Kumar</span>
+                        <span class="font-medium">₹5,000</span>
+                        <span class="px-2 py-0.5 bg-cyan-100 text-cyan-700 text-xs w-fit rounded">UPI</span>
+                        <span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs w-fit rounded">Confirmed</span>
+                      </div>
+                      <div class="px-4 py-3 grid grid-cols-4 gap-4 items-center text-sm text-stone-800">
+                        <span>Lakshmi Devi</span>
+                        <span class="font-medium">₹2,500</span>
+                        <span class="px-2 py-0.5 bg-amber-100 text-amber-700 text-xs w-fit rounded">Gift</span>
+                        <span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs w-fit rounded">Confirmed</span>
+                      </div>
+                      <div class="px-4 py-3 grid grid-cols-4 gap-4 items-center text-sm text-stone-800">
+                        <span>Suresh Babu</span>
+                        <span class="font-medium">₹3,000</span>
+                        <span class="px-2 py-0.5 bg-cyan-100 text-cyan-700 text-xs w-fit rounded">UPI</span>
+                        <span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs w-fit rounded">Confirmed</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Benefits -->
+              <div class="mt-8 flex flex-wrap justify-center gap-3">
+                <span class="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 text-green-500 text-sm font-medium rounded-full border border-green-500/20">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  Real-time tracking
+                </span>
+                <span class="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 text-green-500 text-sm font-medium rounded-full border border-green-500/20">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  Instant export
+                </span>
+                <span class="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 text-green-500 text-sm font-medium rounded-full border border-green-500/20">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  Never lose data
+                </span>
+                <span class="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 text-green-500 text-sm font-medium rounded-full border border-green-500/20">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  Auto calculations
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <style>
+          .mockup-panel {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+          }
+        </style>
+
+        <script is:inline>
+          document.getElementById('compare-toggle').addEventListener('change', function(e) {
+            var before = document.getElementById('mockup-before');
+            var after = document.getElementById('mockup-after');
+            var track = document.getElementById('toggle-track');
+            var thumb = document.getElementById('toggle-thumb');
+            var labelBefore = document.getElementById('label-before');
+            var labelAfter = document.getElementById('label-after');
+            var isChecked = e.target.checked;
+            
+            if (isChecked) {
+              // Show After
+              before.style.opacity = '0';
+              before.style.pointerEvents = 'none';
+              before.style.position = 'absolute';
+              after.style.opacity = '1';
+              after.style.pointerEvents = 'auto';
+              after.style.position = 'relative';
+              // Update toggle
+              track.style.backgroundColor = '#22c55e';
+              thumb.style.transform = 'translateX(2rem)';
+              labelBefore.style.opacity = '0.4';
+              labelBefore.style.color = '';
+              labelAfter.style.opacity = '1';
+              labelAfter.style.color = '#22c55e';
+            } else {
+              // Show Before
+              before.style.opacity = '1';
+              before.style.pointerEvents = 'auto';
+              before.style.position = 'relative';
+              after.style.opacity = '0';
+              after.style.pointerEvents = 'none';
+              after.style.position = 'absolute';
+              // Update toggle
+              track.style.backgroundColor = '#ef4444';
+              thumb.style.transform = 'translateX(0)';
+              labelBefore.style.opacity = '1';
+              labelBefore.style.color = '#ef4444';
+              labelAfter.style.opacity = '0.4';
+              labelAfter.style.color = '';
+            }
+          });
+        </script>
+      </section>
+
       <!-- Trust Section -->
-      <section class="border-t border-base-300 bg-base-200/30">
+      <section class="border-t border-base-300">
         <div class="max-w-6xl mx-auto px-6 py-24 md:py-32">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div class="space-y-6">
