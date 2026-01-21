@@ -6,15 +6,43 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_TITLE } from '../consts';
+import { generateBlogPostingSchema, SEO_CONFIG } from '../seo';
 
 type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+
+// Format dates for schema
+const datePublished = pubDate.toISOString();
+const dateModified = updatedDate ? updatedDate.toISOString() : datePublished;
+
+// Get hero image URL for schema
+const heroImageUrl = heroImage 
+  ? (typeof heroImage === 'string' ? heroImage : heroImage.src)
+  : SEO_CONFIG.logoUrl;
+
+const blogPostSchema = generateBlogPostingSchema(
+  canonicalUrl,
+  title,
+  description,
+  datePublished,
+  dateModified,
+  heroImageUrl
+);
 ---
 
 <html lang="en">
   <head>
-    <BaseHead title={`${title} | ${SITE_TITLE}`} description={description} image={heroImage} />
+    <BaseHead 
+      title={`${title} | ${SITE_TITLE}`} 
+      description={description} 
+      image={heroImage}
+      schema={blogPostSchema}
+      dateModified={dateModified}
+      keywords={['moi', 'gift tracking', 'wedding', title.toLowerCase()]}
+    />
   </head>
 
   <body class="min-h-screen flex flex-col bg-base-100">
@@ -81,4 +109,3 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     <Footer />
   </body>
 </html>
-

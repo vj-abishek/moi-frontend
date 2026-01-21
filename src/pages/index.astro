@@ -3,14 +3,28 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE, FEATURES, HOW_IT_WORKS, getAppUrl } from '../consts';
+import { generateSoftwareApplicationSchema, generateWebPageSchema } from '../seo';
 
 const signupUrl = getAppUrl('/signup', Astro.url);
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+
+// Generate page-specific schemas
+const softwareAppSchema = generateSoftwareApplicationSchema();
+const webPageSchema = generateWebPageSchema(
+  canonicalUrl,
+  SITE_TITLE,
+  SITE_DESCRIPTION
+);
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead 
+      title={SITE_TITLE} 
+      description={SITE_DESCRIPTION} 
+      schema={[softwareAppSchema, webPageSchema]}
+    />
   </head>
   <body class="min-h-screen flex flex-col bg-base-100 font-sans">
     <Header />

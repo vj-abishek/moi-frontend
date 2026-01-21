@@ -1,11 +1,20 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import { getAppUrl } from '../consts';
+import { generateAboutPageSchema } from '../seo';
 
 const signupUrl = getAppUrl('/signup', Astro.url);
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+
+const aboutSchema = generateAboutPageSchema(canonicalUrl);
 ---
 
-<PageLayout title="About Us" description="Learn about Moi - digitizing the timeless tradition of மொய் for modern celebrations.">
+<PageLayout 
+  title="About Us" 
+  description="Learn about Moi - digitizing the timeless tradition of மொய் for modern celebrations. Track wedding gift contributions effortlessly."
+  schema={aboutSchema}
+  keywords={['about moi', 'gift tracking app', 'wedding moi app', 'Tamil wedding tradition', 'மொய் app']}
+>
   <div class="max-w-4xl mx-auto px-6 py-16 md:py-24">
     <!-- Hero Section -->
     <div class="text-center mb-16">
@@ -139,4 +148,3 @@ const signupUrl = getAppUrl('/signup', Astro.url);
     </div>
   </div>
 </PageLayout>
-

@@ -5,16 +5,25 @@ import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_TITLE } from '../../consts';
+import { generateBlogSchema } from '../../seo';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const blogSchema = generateBlogSchema(canonicalUrl);
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={`Blog | ${SITE_TITLE}`} description="All blog posts" />
+    <BaseHead 
+      title={`Blog | ${SITE_TITLE}`} 
+      description="Thoughts, tutorials, and updates about Moi - the modern gift contribution tracking platform for Indian weddings and celebrations." 
+      schema={blogSchema}
+      keywords={['moi blog', 'gift tracking blog', 'wedding tips', 'Indian wedding', 'celebration planning']}
+    />
   </head>
   <body class="min-h-screen flex flex-col bg-base-100">
     <Header />

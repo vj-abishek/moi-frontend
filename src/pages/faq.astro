@@ -1,8 +1,78 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { generateFAQPageSchema } from '../seo';
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+
+// Define FAQs for schema
+const faqs = [
+  // Getting Started
+  {
+    question: 'What is Moi?',
+    answer: 'Moi (மொய்) is a traditional practice in South India where guests give monetary gifts at celebrations like weddings, birthdays, and housewarmings. Our app helps event hosts collect, track, and manage these contributions digitally - whether through UPI payments, cash, or physical gifts.'
+  },
+  {
+    question: 'How do I create an event?',
+    answer: 'Simply sign in with Google or your email, and click "New Event" on your dashboard. Give your event a name (like "Ram & Sita\'s Wedding"), add recipients who will receive contributions, and share your unique link with guests.'
+  },
+  {
+    question: 'Is it free to use?',
+    answer: 'Yes! Moi is completely free for personal use. We don\'t charge any fees for creating events, collecting contributions, or accessing your data.'
+  },
+  // For Event Hosts
+  {
+    question: 'How do guests contribute?',
+    answer: 'Share your event link with guests (via WhatsApp, SMS, or QR code). They can enter their contribution details, choose a recipient, and either pay via UPI or mark their contribution as cash/gift. You\'ll see all entries in real-time on your dashboard.'
+  },
+  {
+    question: 'Can I have multiple recipients?',
+    answer: 'Absolutely! Add as many recipients as you need. For example, for a wedding, you might have both the bride and groom as separate recipients. Guests can choose who they want to give to.'
+  },
+  {
+    question: 'How do I track contributions?',
+    answer: 'Your dashboard shows all contributions in real-time with live analytics. You can see totals by recipient, filter by status (confirmed/pending), and export everything to a spreadsheet for your records.'
+  },
+  {
+    question: 'Can I add admins to help manage?',
+    answer: 'Yes! You can invite other people as admins to help manage your event. They\'ll be able to view and edit contributions, but only you (the owner) can delete the event.'
+  },
+  // For Contributors
+  {
+    question: 'Do I need to create an account to contribute?',
+    answer: 'You can record a contribution without an account, but signing in lets you track all your contributions across events, get email receipts, and have a permanent record of your giving history.'
+  },
+  {
+    question: 'How do I pay via UPI?',
+    answer: 'When you submit your contribution, you\'ll see the recipient\'s UPI QR code. Scan it with any UPI app (GPay, PhonePe, Paytm, etc.), complete the payment, and your contribution will be recorded automatically.'
+  },
+  {
+    question: 'What if I\'m giving cash or a physical gift?',
+    answer: 'Select "Cash" or "Other Gift" as your payment type. Describe what you\'re giving, and the event host will mark it as received when you hand it over in person.'
+  },
+  // Privacy & Security
+  {
+    question: 'Is my data secure?',
+    answer: 'Yes! All connections use HTTPS encryption. We use secure, passwordless authentication (magic links and Google OAuth).'
+  },
+  {
+    question: 'Who can see my contributions?',
+    answer: 'Only you and the event host/admins can see your contribution details. We never share your information with third parties for advertising.'
+  },
+  {
+    question: 'Can I delete my data?',
+    answer: 'Yes! You can request deletion of your account and all associated data at any time by contacting support.'
+  }
+];
+
+const faqSchema = generateFAQPageSchema(canonicalUrl, faqs);
 ---
 
-<PageLayout title="FAQ" description="Everything you need to know about using Moi - frequently asked questions.">
+<PageLayout 
+  title="FAQ" 
+  description="Everything you need to know about using Moi - frequently asked questions about gift tracking, contributions, and UPI payments."
+  schema={faqSchema}
+  keywords={['moi faq', 'gift tracking questions', 'wedding moi help', 'UPI payment help', 'contribution tracking']}
+>
   <div class="max-w-4xl mx-auto px-6 py-16 md:py-24">
     <!-- Hero -->
     <div class="text-center mb-12">
@@ -227,4 +297,3 @@ import PageLayout from '../layouts/PageLayout.astro';
     </div>
   </div>
 </PageLayout>
-

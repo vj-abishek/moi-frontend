@@ -1,8 +1,24 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { generateWebPageSchema } from '../seo';
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+
+const webPageSchema = generateWebPageSchema(
+  canonicalUrl,
+  'Refund & Cancellation Policy - Moi',
+  'Moi refund and cancellation policy - terms for service subscriptions and gift contributions.',
+  '2026-01-07'
+);
 ---
 
-<PageLayout title="Refund & Cancellation Policy" description="Moi refund and cancellation policy - terms for service subscriptions and gift contributions.">
+<PageLayout 
+  title="Refund & Cancellation Policy" 
+  description="Moi refund and cancellation policy - terms for service subscriptions and gift contributions. Understand our refund process."
+  schema={webPageSchema}
+  dateModified="2026-01-07"
+  keywords={['moi refund', 'cancellation policy', 'refund policy', 'gift tracking refund']}
+>
   <div class="max-w-4xl mx-auto px-6 py-16 md:py-24">
     <div class="prose max-w-none">
       <h1>Refund & Cancellation Policy</h1>
@@ -105,4 +121,3 @@ import PageLayout from '../layouts/PageLayout.astro';
     </div>
   </div>
 </PageLayout>
-

@@ -1,8 +1,22 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { generateWebPageSchema } from '../seo';
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+
+const webPageSchema = generateWebPageSchema(
+  canonicalUrl,
+  'Trust & Security - Moi',
+  'Your trust is the foundation of everything we do. Learn how we keep your data safe with HTTPS encryption, passwordless auth, and more.'
+);
 ---
 
-<PageLayout title="Trust & Security" description="Your trust is the foundation of everything we do. Learn how we keep your data safe.">
+<PageLayout 
+  title="Trust & Security" 
+  description="Your trust is the foundation of everything we do. Learn how we keep your data safe with HTTPS encryption, passwordless auth, and regular backups."
+  schema={webPageSchema}
+  keywords={['moi security', 'data security', 'passwordless auth', 'HTTPS encryption', 'trust']}
+>
   <div class="max-w-4xl mx-auto px-6 py-16 md:py-24">
     <!-- Hero -->
     <div class="text-center mb-16">
@@ -83,4 +97,3 @@ import PageLayout from '../layouts/PageLayout.astro';
     </div>
   </div>
 </PageLayout>
-

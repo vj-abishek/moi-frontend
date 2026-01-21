@@ -1,8 +1,32 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { generateHowToSchema } from '../seo';
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+
+// HowTo schema for fixing UPI payment issues
+const howToSteps = [
+  { name: 'Download QR Code', text: 'Download the QR code image from the payment screen on Moi.' },
+  { name: 'Open UPI App', text: 'Open your preferred UPI app (GPay, PhonePe, Paytm, etc.).' },
+  { name: 'Load QR from Gallery', text: 'Look for "Scan QR" or "Load from Gallery" option in your UPI app.' },
+  { name: 'Select QR Image', text: 'Select the downloaded QR code image from your gallery.' },
+  { name: 'Complete Payment', text: 'Complete the payment - your bank\'s daily UPI limit applies (usually ₹1,00,000/day).' },
+];
+
+const howToSchema = generateHowToSchema(
+  canonicalUrl,
+  'How to Fix UPI Payment Issues Above ₹2,000 on Moi',
+  'Step-by-step guide to bypass UPI deeplink limits and complete larger payments using QR codes.',
+  howToSteps
+);
 ---
 
-<PageLayout title="Troubleshooting" description="Facing issues with UPI payments? Find solutions to common problems when paying via Moi.">
+<PageLayout 
+  title="Troubleshooting" 
+  description="Facing issues with UPI payments? Find solutions to common problems when paying via Moi. Fix Google Pay ₹2,000 limit and BHIM issues."
+  schema={howToSchema}
+  keywords={['UPI troubleshooting', 'Google Pay limit', 'BHIM payment issue', 'UPI deeplink problem', 'moi payment help']}
+>
   <div class="max-w-4xl mx-auto px-6 py-16 md:py-24">
     <!-- Hero -->
     <div class="text-center mb-12">
@@ -123,7 +147,7 @@ import PageLayout from '../layouts/PageLayout.astro';
               </li>
             </ol>
             <p class="mt-4 text-xs text-base-content/50">
-              💡 All major UPI apps support loading QR from gallery
+              All major UPI apps support loading QR from gallery
             </p>
           </div>
 
@@ -155,7 +179,7 @@ import PageLayout from '../layouts/PageLayout.astro';
               </li>
             </ol>
             <p class="mt-4 text-xs text-base-content/50">
-              💡 This is how QR payments are meant to work - no app restrictions
+              This is how QR payments are meant to work - no app restrictions
             </p>
           </div>
         </div>
@@ -247,4 +271,3 @@ import PageLayout from '../layouts/PageLayout.astro';
     </div>
   </div>
 </PageLayout>
-

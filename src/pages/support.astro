@@ -1,8 +1,18 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { generateContactPageSchema } from '../seo';
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+
+const contactSchema = generateContactPageSchema(canonicalUrl);
 ---
 
-<PageLayout title="Support" description="Get help with Moi - find answers, contact us, or check system status.">
+<PageLayout 
+  title="Support" 
+  description="Get help with Moi - find answers, contact us, or check system status. We're here to help with your gift tracking needs."
+  schema={contactSchema}
+  keywords={['moi support', 'moi help', 'gift tracking support', 'contact moi']}
+>
   <div class="max-w-4xl mx-auto px-6 py-16 md:py-24">
     <!-- Hero -->
     <div class="text-center mb-12">
@@ -91,4 +101,3 @@ import PageLayout from '../layouts/PageLayout.astro';
     </div>
   </div>
 </PageLayout>
-

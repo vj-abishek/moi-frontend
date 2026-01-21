@@ -1,8 +1,24 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { generateWebPageSchema } from '../seo';
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+
+const webPageSchema = generateWebPageSchema(
+  canonicalUrl,
+  'Terms of Service - Moi',
+  'Terms and conditions for using the Moi gift tracking service.',
+  '2026-01-07'
+);
 ---
 
-<PageLayout title="Terms of Service" description="Terms and conditions for using the Moi gift tracking service.">
+<PageLayout 
+  title="Terms of Service" 
+  description="Terms and conditions for using the Moi gift tracking service. Read our terms before using the platform."
+  schema={webPageSchema}
+  dateModified="2026-01-07"
+  keywords={['moi terms', 'terms of service', 'gift tracking terms', 'user agreement']}
+>
   <div class="max-w-4xl mx-auto px-6 py-16 md:py-24">
     <div class="prose max-w-none">
       <h1>Terms of Service</h1>
@@ -85,4 +101,3 @@ import PageLayout from '../layouts/PageLayout.astro';
     </div>
   </div>
 </PageLayout>
-
