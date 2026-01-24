@@ -39,61 +39,122 @@ const webPageSchema = generateWebPageSchema(
         <canvas id="dot-grid" class="absolute inset-0 w-full h-full z-[1] pointer-events-none"></canvas>
         
         <div class="max-w-6xl mx-auto px-6 py-20 relative z-10">
-          <div class="max-w-3xl space-y-8">
-            <div class="space-y-4">
-              <p class="text-sm uppercase tracking-[0.2em] text-primary font-medium inline-flex items-center gap-2">
-                <span class="w-8 h-px bg-primary"></span>
-                Gift Tracking Made Simple
+          <div class="grid items-center gap-10 lg:gap-20 lg:grid-cols-[1fr_1fr]">
+            <div class="space-y-8">
+              <div class="space-y-4">
+                <p class="text-sm uppercase tracking-[0.2em] text-primary font-medium inline-flex items-center gap-2">
+                  <span class="w-8 h-px bg-primary"></span>
+                  Gift Tracking Made Simple
+                </p>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.1]">
+                  Track gifts.<br/>
+                  <span class="text-primary">Never miss a</span>
+                  <span class="text-primary font-normal italic"> மொய்</span>
+                </h1>
+              </div>
+              
+              <p class="text-xl md:text-2xl text-base-content/60 leading-relaxed max-w-2xl">
+                Real-time gift tracking for weddings, birthdays, and celebrations.
               </p>
-              <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.1]">
-                Track every gift.<br/>
-                <span class="text-primary">Never miss a</span>
-                <span class="text-primary font-normal italic"> மொய்</span>
-              </h1>
+              
+              <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                <a 
+                  href={signupUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="px-8 py-4 bg-primary text-primary-content text-sm uppercase tracking-widest font-semibold hover:bg-primary/90 transition-all hover:scale-105 text-center "
+                >
+                  Get Started — It's Free
+                </a>
+                <a 
+                  href="#how-it-works" 
+                  class="px-8 py-4 border border-base-content/20 text-sm uppercase tracking-widest font-medium hover:border-primary hover:text-primary transition-colors text-center "
+                >
+                  See How It Works
+                </a>
+              </div>
+              
             </div>
-            
-            <p class="text-xl md:text-2xl text-base-content/60 leading-relaxed max-w-2xl">
-              The modern way to manage gift contributions during weddings, birthdays, and celebrations. Real-time tracking, zero hassle.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4 pt-4">
-              <a 
-                href={signupUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="px-8 py-4 bg-primary text-primary-content text-sm uppercase tracking-widest font-semibold hover:bg-primary/90 transition-all hover:scale-105 text-center "
+
+            <div class="relative lg:justify-self-stretch lg:translate-x-4">
+              <button
+                id="intro-video-trigger"
+                type="button"
+                aria-label="Play intro video"
+                aria-haspopup="dialog"
+                aria-controls="intro-video-modal"
+                class="group relative w-full overflow-hidden border-[3px] border-base-300 bg-base-100/80 shadow-2xl focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-base-100"
               >
-                Get Started — It's Free
-              </a>
-              <a 
-                href="#how-it-works" 
-                class="px-8 py-4 border border-base-content/20 text-sm uppercase tracking-widest font-medium hover:border-primary hover:text-primary transition-colors text-center "
-              >
-                See How It Works
-              </a>
-            </div>
-            
-            <div class="flex items-center gap-6 pt-4 text-sm text-base-content/50">
-              <span class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                No app required
-              </span>
-              <span class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                No passwords
-              </span>
-              <span class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                No spam
-              </span>
+                <div class="aspect-video sm:aspect-[3/4] w-full bg-base-200">
+                  <img
+                    src="/thumb.jpg"
+                    alt="Intro video preview"
+                    class="w-full h-full object-cover object-[left_top]"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/90 text-primary-content shadow-lg transition-transform duration-300 group-hover:scale-105">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M8 5v14l11-7z"></path>
+                    </svg>
+                  </span>
+                </div>
+                <div class="absolute inset-0 bg-black/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+              </button>
             </div>
           </div>
+
+          <dialog
+            id="intro-video-modal"
+            class="backdrop:bg-black/70 bg-transparent p-0 border-none w-full max-w-none"
+          >
+            <div class="min-h-screen w-full px-4 py-10 flex items-center justify-center">
+              <div id="intro-video-dialog-content" class="w-full max-w-5xl bg-base-100 border-[3px] border-base-300 shadow-2xl">
+                <video
+                  id="intro-video-player"
+                  class="w-full h-auto"
+                  data-src="/intro.mp4"
+                  controls
+                  playsinline
+                ></video>
+              </div>
+            </div>
+          </dialog>
+
+          <script is:inline>
+            (function() {
+              var trigger = document.getElementById('intro-video-trigger');
+              var modal = document.getElementById('intro-video-modal');
+              var player = document.getElementById('intro-video-player');
+              var dialogContent = document.getElementById('intro-video-dialog-content');
+
+              if (!trigger || !modal || !player || !dialogContent) return;
+
+              function resetPlayer() {
+                player.pause();
+                player.currentTime = 0;
+                player.removeAttribute('src');
+                player.load();
+              }
+
+              trigger.addEventListener('click', function() {
+                if (!player.getAttribute('src')) {
+                  player.setAttribute('src', player.dataset.src || '');
+                  player.load();
+                }
+                modal.showModal();
+              });
+
+              modal.addEventListener('click', function(event) {
+                if (!dialogContent.contains(event.target)) {
+                  modal.close();
+                }
+              });
+
+              modal.addEventListener('close', resetPlayer);
+            })();
+          </script>
         </div>
       </section>
 
