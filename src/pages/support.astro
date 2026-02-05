@@ -1,10 +1,11 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { FOOTER_LINKS } from '../consts';
 import { generateContactPageSchema } from '../seo';
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
-
 const contactSchema = generateContactPageSchema(canonicalUrl);
+const statusLink = FOOTER_LINKS.product.find((l) => l.label === 'Status');
 ---
 
 <PageLayout 
@@ -71,8 +72,8 @@ const contactSchema = generateContactPageSchema(canonicalUrl);
         <span class="text-primary font-medium text-sm group-hover:underline">abishek@merg.cc →</span>
       </a>
 
-      <!-- Status Card -->
-      <a href="/status" class="group p-8 bg-base-200/50 border border-base-300 hover:border-primary/50 transition-all">
+      <!-- Status Card (external: OpenStatus) -->
+      <a href={statusLink?.href ?? 'https://merg.openstatus.dev'} target="_blank" rel="noopener noreferrer" class="group p-8 bg-base-200/50 border border-base-300 hover:border-primary/50 transition-all">
         <div class="w-12 h-12 bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
