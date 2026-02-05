@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE, FEATURES, HOW_IT_WORKS, getAppUrl } from '../consts';
 import { generateSoftwareApplicationSchema, generateWebPageSchema } from '../seo';
+import thumb from '../assets/thumb.jpg';
 
 const signupUrl = getAppUrl('/signup', Astro.url);
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
@@ -79,7 +81,7 @@ const BENEFITS = FEATURES.slice(0, 3);
         </dialog>
 
         <script is:inline>
-          (function() {
+          document.addEventListener('DOMContentLoaded', function() {
             var trigger = document.getElementById('intro-video-trigger');
             var modal = document.getElementById('intro-video-modal');
             var player = document.getElementById('intro-video-player');
@@ -102,7 +104,7 @@ const BENEFITS = FEATURES.slice(0, 3);
               if (!dialogContent.contains(e.target)) modal.close();
             });
             modal.addEventListener('close', resetPlayer);
-          })();
+          });
         </script>
       </section>
 
@@ -125,10 +127,10 @@ const BENEFITS = FEATURES.slice(0, 3);
               aria-label="Play intro video"
               aria-haspopup="dialog"
               aria-controls="intro-video-modal"
-              class="group block w-full overflow-hidden rounded-xl border border-base-300 bg-base-100 shadow-2xl focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base-200"
+              class="group block w-full overflow-hidden border border-base-300 bg-base-100 shadow-2xl focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base-200"
             >
-              <div class="relative aspect-video w-full bg-base-300 flex items-center justify-center">
-                <img src="/thumb.jpg" alt="" class="w-full h-full object-cover object-top-left" loading="lazy" />
+              <div class="relative aspect-video w-full bg-base-300 flex items-center justify-center overflow-hidden">
+                <Image src={thumb} alt="" class="w-full h-full object-cover object-top-left" loading="lazy" width={1280} height={720} />
                 <span class="absolute inset-0 flex items-center justify-center">
                   <span class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-content shadow-xl transition-transform group-hover:scale-110" aria-hidden="true">
                     <svg class="w-7 h-7 ml-1" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
