@@ -8,13 +8,15 @@ import { generateSoftwareApplicationSchema, generateWebPageSchema } from '../seo
 const signupUrl = getAppUrl('/signup', Astro.url);
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 
-// Generate page-specific schemas
 const softwareAppSchema = generateSoftwareApplicationSchema();
 const webPageSchema = generateWebPageSchema(
   canonicalUrl,
   SITE_TITLE,
   SITE_DESCRIPTION
 );
+
+// Top 3 benefits for hero / social proof
+const BENEFITS = FEATURES.slice(0, 3);
 ---
 
 <!doctype html>
@@ -25,782 +27,267 @@ const webPageSchema = generateWebPageSchema(
       description={SITE_DESCRIPTION} 
       schema={[softwareAppSchema, webPageSchema]}
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet" />
   </head>
   <body class="min-h-screen flex flex-col bg-base-100 font-sans">
     <Header />
-    
+
     <main class="flex-1">
-      <!-- Hero Section -->
-      <section id="hero-section" class="relative overflow-hidden min-h-[90vh] flex items-center">
-        <!-- Subtle gradient base -->
-        <div class="absolute inset-0 bg-gradient-to-br from-base-100 via-base-100 to-base-100/95"></div>
-        
-        <!-- Interactive dot grid canvas - on top of gradient -->
-        <canvas id="dot-grid" class="absolute inset-0 w-full h-full z-[1] pointer-events-none"></canvas>
-        
-        <div class="max-w-6xl mx-auto px-6 py-20 relative z-10">
-          <div class="grid items-center gap-10 lg:gap-20 lg:grid-cols-[1fr_1fr]">
-            <div class="space-y-8">
-              <div class="space-y-4">
-                <p class="text-sm uppercase tracking-[0.2em] text-primary font-medium inline-flex items-center gap-2">
-                  <span class="w-8 h-px bg-primary"></span>
-                  Gift Tracking Made Simple
-                </p>
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.1]">
-                  Track gifts.<br/>
-                  <span class="text-primary">Never miss a</span>
-                  <span class="text-primary font-normal italic"> மொய்</span>
-                </h1>
-              </div>
-              
-              <p class="text-xl md:text-2xl text-base-content/60 leading-relaxed max-w-2xl">
-                Real-time gift tracking for weddings, birthdays, and celebrations.
-              </p>
-              
-              <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                <a 
-                  href={signupUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="px-8 py-4 bg-primary text-primary-content text-sm uppercase tracking-widest font-semibold hover:bg-primary/90 transition-all hover:scale-105 text-center "
-                >
-                  Get Started — It's Free
-                </a>
-                <a 
-                  href="#how-it-works" 
-                  class="px-8 py-4 border border-base-content/20 text-sm uppercase tracking-widest font-medium hover:border-primary hover:text-primary transition-colors text-center "
-                >
-                  See How It Works
-                </a>
-              </div>
-              
-            </div>
+      <!-- Hero -->
+      <section id="hero-section" class="relative overflow-hidden min-h-[88vh] flex items-center">
+        <div class="absolute inset-0 bg-linear-to-b from-base-100 via-base-100 to-base-200/50"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,oklch(76.88%_0.17_81/.12),transparent)]"></div>
+        <canvas id="dot-grid" class="absolute inset-0 w-full h-full z-1 pointer-events-none" aria-hidden="true"></canvas>
 
-            <div class="relative lg:justify-self-stretch lg:translate-x-4">
-              <button
-                id="intro-video-trigger"
-                type="button"
-                aria-label="Play intro video"
-                aria-haspopup="dialog"
-                aria-controls="intro-video-modal"
-                class="group relative w-full overflow-hidden border-[3px] border-base-300 bg-base-100/80 shadow-2xl focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-base-100"
-              >
-                <div class="aspect-video sm:aspect-[3/4] w-full bg-base-200">
-                  <img
-                    src="/thumb.jpg"
-                    alt="Intro video preview"
-                    class="w-full h-full object-cover object-[left_top]"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <span class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/90 text-primary-content shadow-lg transition-transform duration-300 group-hover:scale-105">
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M8 5v14l11-7z"></path>
-                    </svg>
-                  </span>
-                </div>
-                <div class="absolute inset-0 bg-black/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
-              </button>
-            </div>
-          </div>
-
-          <dialog
-            id="intro-video-modal"
-            class="backdrop:bg-black/70 bg-transparent p-0 border-none w-full max-w-none"
-          >
-            <div class="min-h-screen w-full px-4 py-10 flex items-center justify-center">
-              <div id="intro-video-dialog-content" class="w-full max-w-5xl bg-base-100 border-[3px] border-base-300 shadow-2xl">
-                <video
-                  id="intro-video-player"
-                  class="w-full h-auto"
-                  data-src="/intro.mp4"
-                  controls
-                  playsinline
-                ></video>
-              </div>
-            </div>
-          </dialog>
-
-          <script is:inline>
-            (function() {
-              var trigger = document.getElementById('intro-video-trigger');
-              var modal = document.getElementById('intro-video-modal');
-              var player = document.getElementById('intro-video-player');
-              var dialogContent = document.getElementById('intro-video-dialog-content');
-
-              if (!trigger || !modal || !player || !dialogContent) return;
-
-              function resetPlayer() {
-                player.pause();
-                player.currentTime = 0;
-                player.removeAttribute('src');
-                player.load();
-              }
-
-              trigger.addEventListener('click', function() {
-                if (!player.getAttribute('src')) {
-                  player.setAttribute('src', player.dataset.src || '');
-                  player.load();
-                }
-                modal.showModal();
-              });
-
-              modal.addEventListener('click', function(event) {
-                if (!dialogContent.contains(event.target)) {
-                  modal.close();
-                }
-              });
-
-              modal.addEventListener('close', resetPlayer);
-            })();
-          </script>
-        </div>
-      </section>
-
-      <!-- Features Section -->
-      <section id="features" class="border-t border-base-300 bg-base-200/30">
-        <div class="max-w-6xl mx-auto px-6 py-24 md:py-32">
-          <div class="text-center mb-16 space-y-4">
-            <p class="text-sm uppercase tracking-[0.2em] text-primary font-medium">
-              Why Choose Moi
-            </p>
-            <h2 class="text-4xl md:text-5xl font-bold">
-              Everything you need to<br/>track contributions
-            </h2>
-            <p class="text-base-content/60 max-w-2xl mx-auto text-lg">
-              From real-time analytics to seamless sharing, Moi handles it all so you can focus on celebrating.
-            </p>
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {FEATURES.map((feature, index) => (
-              <div 
-                class="group p-8 bg-base-100 border border-base-300 hover:border-primary/50 transition-all duration-300 "
-              >
-                <div class="w-12 h-12 mb-6 flex items-center justify-center bg-primary/10  group-hover:bg-primary/20 transition-colors">
-                  {feature.icon === 'chart' && (
-                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                    </svg>
-                  )}
-                  {feature.icon === 'link' && (
-                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
-                    </svg>
-                  )}
-                  {feature.icon === 'payment' && (
-                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                    </svg>
-                  )}
-                  {feature.icon === 'team' && (
-                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                    </svg>
-                  )}
-                  {feature.icon === 'export' && (
-                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                    </svg>
-                  )}
-                  {feature.icon === 'device' && (
-                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                    </svg>
-                  )}
-                </div>
-                <h3 class="text-xl font-semibold mb-3">{feature.title}</h3>
-                <p class="text-base-content/60 leading-relaxed">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <!-- How It Works Section -->
-      <section id="how-it-works" class="border-t border-base-300">
-        <div class="max-w-6xl mx-auto px-6 py-24 md:py-32">
-          <div class="text-center mb-16 space-y-4">
-            <p class="text-sm uppercase tracking-[0.2em] text-primary font-medium">
-              Simple Process
-            </p>
-            <h2 class="text-4xl md:text-5xl font-bold">
-              Get started in minutes
-            </h2>
-            <p class="text-base-content/60 max-w-2xl mx-auto text-lg">
-              Three simple steps to start tracking every contribution at your event.
-            </p>
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            {HOW_IT_WORKS.map((step, index) => (
-              <div 
-                class="relative text-center"
-              >
-                {index < HOW_IT_WORKS.length - 1 && (
-                  <div class="hidden md:block absolute top-12 left-[60%] w-[80%] h-px bg-gradient-to-r from-primary/50 to-transparent"></div>
-                )}
-                <div class="w-24 h-24 mx-auto mb-6 flex items-center justify-center bg-primary/10  border-2 border-primary/30">
-                  <span class="text-3xl font-bold text-primary">{step.step}</span>
-                </div>
-                <h3 class="text-2xl font-semibold mb-3">{step.title}</h3>
-                <p class="text-base-content/60 leading-relaxed max-w-xs mx-auto">{step.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <!-- Before vs After Comparison Section -->
-      <section id="compare" class="border-t border-base-300 bg-base-200/30 overflow-hidden">
-        <div class="max-w-6xl mx-auto px-6 py-24 md:py-32">
-          <div class="text-center mb-12 space-y-4">
-            <p class="text-sm uppercase tracking-[0.2em] text-primary font-medium">
-              The Difference
-            </p>
-            <h2 class="text-4xl md:text-5xl font-bold">
-              Before & After Moi
-            </h2>
-            <p class="text-base-content/60 max-w-2xl mx-auto text-lg">
-              See how Moi transforms chaotic gift tracking into an organized, stress-free experience.
-            </p>
-          </div>
-
-          <!-- Toggle Switch -->
-          <div class="flex justify-center mb-10">
-            <label class="inline-flex items-center gap-4 px-6 py-3 bg-base-100 border border-base-300 cursor-pointer select-none rounded-lg">
-              <span id="label-before" class="text-sm font-semibold uppercase tracking-wider text-red-500">Before</span>
-              <div id="toggle-track" class="relative w-16 h-8 bg-red-500 rounded-full transition-colors duration-300">
-                <input type="checkbox" id="compare-toggle" class="sr-only" />
-                <div id="toggle-thumb" class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300"></div>
-              </div>
-              <span id="label-after" class="text-sm font-semibold uppercase tracking-wider text-base-content/40">After</span>
-            </label>
-          </div>
-
-          <!-- Mockups Container -->
-          <div class="relative max-w-4xl mx-auto">
-            <!-- Before Mockup -->
-            <div id="mockup-before" class="mockup-panel">
-              <div class="relative bg-amber-100 border-2 border-amber-400 shadow-xl p-4 md:p-8 rotate-[-0.5deg] rounded-sm">
-                <!-- Notebook lines background -->
-                <div class="absolute inset-0 opacity-30" style="background-image: repeating-linear-gradient(transparent, transparent 23px, #b45309 24px);"></div>
-                
-                <div class="relative">
-                  <!-- Header -->
-                  <div class="mb-4 md:mb-6 pb-2 md:pb-3 border-b-2 border-amber-500">
-                    <h3 class="text-lg md:text-2xl text-amber-950 font-bold" style="font-family: 'Segoe Script', 'Bradley Hand', cursive;">
-                      Wedding Moi List
-                    </h3>
-                  </div>
-                  
-                  <!-- Messy entries -->
-                  <div class="space-y-2 md:space-y-4 text-amber-950 text-sm md:text-base" style="font-family: 'Segoe Script', 'Bradley Hand', cursive;">
-                    <div class="flex justify-between items-center gap-2">
-                      <span>Ravi anna</span>
-                      <span class="text-right">₹5000 <span class="text-red-700 text-xs md:text-sm font-medium">(cash??)</span></span>
-                    </div>
-                    <div class="flex justify-between items-center gap-2 line-through opacity-60">
-                      <span>Kumar mama</span>
-                      <span class="text-right">₹??? <span class="text-xs">(lost)</span></span>
-                    </div>
-                    <div class="flex justify-between items-center gap-2">
-                      <span>Lakshmi aunty</span>
-                      <span class="text-amber-800 text-right text-xs md:text-sm">gold or ₹2000?</span>
-                    </div>
-                    <div class="flex justify-between items-center gap-2 relative">
-                      <span>Suresh</span>
-                      <span>₹2500</span>
-                    </div>
-                    <div class="text-center pt-2 md:pt-4 text-amber-700 italic text-xs md:text-sm">
-                      ... 47 more names ...
-                    </div>
-                  </div>
-                  
-                  <!-- Chaotic footer -->
-                  <div class="mt-4 md:mt-8 pt-3 md:pt-4 border-t-2 border-dashed border-amber-500">
-                    <div class="flex justify-between items-center gap-2">
-                      <span class="text-base md:text-xl text-amber-950 font-bold" style="font-family: 'Segoe Script', 'Bradley Hand', cursive;">Total: ₹???,???</span>
-                      <span class="text-red-700 text-xs md:text-sm font-medium">Recount!</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Pain points -->
-              <div class="mt-6 md:mt-8 flex flex-wrap justify-center gap-2 md:gap-3">
-                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-red-500/10 text-red-500 text-xs md:text-sm font-medium rounded-full border border-red-500/20">
-                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                  Lost records
-                </span>
-                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-red-500/10 text-red-500 text-xs md:text-sm font-medium rounded-full border border-red-500/20">
-                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                  Manual counting
-                </span>
-                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-red-500/10 text-red-500 text-xs md:text-sm font-medium rounded-full border border-red-500/20">
-                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                  No backup
-                </span>
-                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-red-500/10 text-red-500 text-xs md:text-sm font-medium rounded-full border border-red-500/20">
-                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                  Confusion
-                </span>
-              </div>
-            </div>
-
-            <!-- After Mockup -->
-            <div id="mockup-after" class="mockup-panel absolute inset-0 opacity-0 pointer-events-none">
-              <div class="bg-stone-100 border border-stone-300 shadow-2xl overflow-hidden rounded-sm">
-                <!-- Header -->
-                <div class="bg-stone-50 px-4 md:px-6 py-3 md:py-4 border-b border-stone-200 flex items-center justify-between">
-                  <div class="flex items-center gap-2 md:gap-3">
-                    <div class="w-7 h-7 md:w-8 md:h-8 bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                      <span class="text-amber-600 font-bold text-xs md:text-sm">M</span>
-                    </div>
-                    <div class="min-w-0">
-                      <p class="font-semibold text-xs md:text-sm text-stone-900 truncate">Arun & Priya's Wedding</p>
-                      <p class="text-[10px] md:text-xs text-stone-500">getmoi.in/arun-priya</p>
-                    </div>
-                  </div>
-                  <div class="flex items-center gap-1.5 flex-shrink-0">
-                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    <span class="text-[10px] md:text-xs text-stone-500">Live</span>
-                  </div>
-                </div>
-                
-                <!-- Stats -->
-                <div class="p-3 md:p-6">
-                  <div class="grid grid-cols-3 gap-2 md:gap-4 mb-4 md:mb-6">
-                    <div class="bg-stone-50 border border-stone-200 p-2 md:p-4">
-                      <p class="text-[10px] md:text-xs text-stone-500 mb-0.5 md:mb-1">Total</p>
-                      <p class="text-sm md:text-2xl font-bold text-stone-900">₹2.45L</p>
-                    </div>
-                    <div class="bg-stone-50 border border-stone-200 p-2 md:p-4">
-                      <p class="text-[10px] md:text-xs text-stone-500 mb-0.5 md:mb-1">Contributors</p>
-                      <p class="text-sm md:text-2xl font-bold text-stone-900">127</p>
-                    </div>
-                    <div class="bg-stone-50 border border-stone-200 p-2 md:p-4">
-                      <p class="text-[10px] md:text-xs text-stone-500 mb-0.5 md:mb-1">Confirmed</p>
-                      <p class="text-sm md:text-2xl font-bold text-green-700">98%</p>
-                    </div>
-                  </div>
-                  
-                  <!-- Table -->
-                  <div class="border border-stone-200 overflow-hidden bg-stone-50 text-xs md:text-sm">
-                    <div class="bg-stone-100 px-2 md:px-4 py-2 font-semibold text-stone-600 grid grid-cols-[1fr_auto_auto] md:grid-cols-4 gap-2 md:gap-4 border-b border-stone-200">
-                      <span>Name</span>
-                      <span>Amount</span>
-                      <span class="hidden md:block">Type</span>
-                      <span>Status</span>
-                    </div>
-                    <div class="divide-y divide-stone-200 bg-stone-50">
-                      <div class="px-2 md:px-4 py-2 md:py-3 grid grid-cols-[1fr_auto_auto] md:grid-cols-4 gap-2 md:gap-4 items-center text-stone-800">
-                        <span class="truncate">Ravi Kumar</span>
-                        <span class="font-medium">₹5,000</span>
-                        <span class="hidden md:block px-2 py-0.5 bg-cyan-100 text-cyan-700 text-xs w-fit rounded">UPI</span>
-                        <span class="px-1.5 md:px-2 py-0.5 bg-green-100 text-green-700 text-[10px] md:text-xs w-fit rounded">Confirmed</span>
-                      </div>
-                      <div class="px-2 md:px-4 py-2 md:py-3 grid grid-cols-[1fr_auto_auto] md:grid-cols-4 gap-2 md:gap-4 items-center text-stone-800">
-                        <span class="truncate">Lakshmi Devi</span>
-                        <span class="font-medium">₹2,500</span>
-                        <span class="hidden md:block px-2 py-0.5 bg-amber-100 text-amber-700 text-xs w-fit rounded">Gift</span>
-                        <span class="px-1.5 md:px-2 py-0.5 bg-green-100 text-green-700 text-[10px] md:text-xs w-fit rounded">Confirmed</span>
-                      </div>
-                      <div class="px-2 md:px-4 py-2 md:py-3 grid grid-cols-[1fr_auto_auto] md:grid-cols-4 gap-2 md:gap-4 items-center text-stone-800">
-                        <span class="truncate">Suresh Babu</span>
-                        <span class="font-medium">₹3,000</span>
-                        <span class="hidden md:block px-2 py-0.5 bg-cyan-100 text-cyan-700 text-xs w-fit rounded">UPI</span>
-                        <span class="px-1.5 md:px-2 py-0.5 bg-green-100 text-green-700 text-[10px] md:text-xs w-fit rounded">Confirmed</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Benefits -->
-              <div class="mt-6 md:mt-8 flex flex-wrap justify-center gap-2 md:gap-3">
-                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-green-500/10 text-green-500 text-xs md:text-sm font-medium rounded-full border border-green-500/20">
-                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  Real-time
-                </span>
-                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-green-500/10 text-green-500 text-xs md:text-sm font-medium rounded-full border border-green-500/20">
-                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  Export CSV
-                </span>
-                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-green-500/10 text-green-500 text-xs md:text-sm font-medium rounded-full border border-green-500/20">
-                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  Cloud saved
-                </span>
-                <span class="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-green-500/10 text-green-500 text-xs md:text-sm font-medium rounded-full border border-green-500/20">
-                  <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  Auto totals
-                </span>
-              </div>
-            </div>
+        <div class="max-w-4xl mx-auto px-6 py-24 relative z-10 text-center">
+          <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-6" style="font-family: var(--font-moi-display), 'Fraunces', serif;">
+            Gift tracking for weddings & celebrations
+          </p>
+          <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-6" style="font-family: var(--font-moi-display), 'Fraunces', serif;">
+            Track every contribution.<br />
+            <span class="text-primary italic font-normal">Never miss a மொய்.</span>
+          </h1>
+          <p class="text-lg md:text-xl text-base-content/70 leading-relaxed mb-10 max-w-2xl mx-auto">
+            One link. Real-time totals. UPI, cash, and gifts in one place. Share with family, export when you need it.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={signupUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-content font-semibold text-sm uppercase tracking-wider hover:bg-primary/90 transition-all hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base-100"
+            >
+              Get started free
+            </a>
+            <a
+              href="#how-it-works"
+              class="inline-flex items-center justify-center px-8 py-4 border border-base-content/25 text-sm font-medium hover:border-primary hover:text-primary transition-colors"
+            >
+              See how it works
+            </a>
           </div>
         </div>
 
-        <style>
-          .mockup-panel {
-            transition: opacity 0.4s ease, transform 0.4s ease;
-          }
-        </style>
+        <dialog id="intro-video-modal" class="backdrop:bg-black/70 bg-transparent p-0 border-none w-full max-w-none">
+          <div class="min-h-screen w-full px-4 py-10 flex items-center justify-center">
+            <div id="intro-video-dialog-content" class="w-full max-w-4xl bg-base-100 border border-base-300 shadow-2xl">
+              <video id="intro-video-player" class="w-full h-auto" data-src="/intro.mp4" controls playsinline></video>
+            </div>
+          </div>
+        </dialog>
 
         <script is:inline>
-          document.getElementById('compare-toggle').addEventListener('change', function(e) {
-            var before = document.getElementById('mockup-before');
-            var after = document.getElementById('mockup-after');
-            var track = document.getElementById('toggle-track');
-            var thumb = document.getElementById('toggle-thumb');
-            var labelBefore = document.getElementById('label-before');
-            var labelAfter = document.getElementById('label-after');
-            var isChecked = e.target.checked;
-            
-            if (isChecked) {
-              // Show After
-              before.style.opacity = '0';
-              before.style.pointerEvents = 'none';
-              before.style.position = 'absolute';
-              after.style.opacity = '1';
-              after.style.pointerEvents = 'auto';
-              after.style.position = 'relative';
-              // Update toggle
-              track.style.backgroundColor = '#22c55e';
-              thumb.style.transform = 'translateX(2rem)';
-              labelBefore.style.opacity = '0.4';
-              labelBefore.style.color = '';
-              labelAfter.style.opacity = '1';
-              labelAfter.style.color = '#22c55e';
-            } else {
-              // Show Before
-              before.style.opacity = '1';
-              before.style.pointerEvents = 'auto';
-              before.style.position = 'relative';
-              after.style.opacity = '0';
-              after.style.pointerEvents = 'none';
-              after.style.position = 'absolute';
-              // Update toggle
-              track.style.backgroundColor = '#ef4444';
-              thumb.style.transform = 'translateX(0)';
-              labelBefore.style.opacity = '1';
-              labelBefore.style.color = '#ef4444';
-              labelAfter.style.opacity = '0.4';
-              labelAfter.style.color = '';
+          (function() {
+            var trigger = document.getElementById('intro-video-trigger');
+            var modal = document.getElementById('intro-video-modal');
+            var player = document.getElementById('intro-video-player');
+            var dialogContent = document.getElementById('intro-video-dialog-content');
+            if (!trigger || !modal || !player || !dialogContent) return;
+            function resetPlayer() {
+              player.pause();
+              player.currentTime = 0;
+              player.removeAttribute('src');
+              player.load();
             }
-          });
+            trigger.addEventListener('click', function() {
+              if (!player.getAttribute('src')) {
+                player.setAttribute('src', player.dataset.src || '');
+                player.load();
+              }
+              modal.showModal();
+            });
+            modal.addEventListener('click', function(e) {
+              if (!dialogContent.contains(e.target)) modal.close();
+            });
+            modal.addEventListener('close', resetPlayer);
+          })();
         </script>
       </section>
 
-      <!-- Trust Section -->
-      <section class="border-t border-base-300">
-        <div class="max-w-6xl mx-auto px-6 py-24 md:py-32">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div class="space-y-6">
-              <p class="text-sm uppercase tracking-[0.2em] text-primary font-medium">
-                Built for Trust
-              </p>
-              <h2 class="text-4xl md:text-5xl font-bold leading-tight">
-                Your data, your control
-              </h2>
-              <p class="text-base-content/60 text-lg leading-relaxed">
-                We built Moi with privacy and simplicity at its core. No unnecessary data collection, no spam, no complicated setup.
-              </p>
-              
-              <div class="space-y-4 pt-4">
-                <div class="flex items-start gap-4">
-                  <div class="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-primary/10 ">
-                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 class="font-semibold text-lg">Passwordless Authentication</h4>
-                    <p class="text-base-content/60">Sign in with magic links or Google. No passwords to remember or reset.</p>
-                  </div>
-                </div>
-                
-                <div class="flex items-start gap-4">
-                  <div class="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-primary/10 ">
-                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 class="font-semibold text-lg">Zero Spam Guarantee</h4>
-                    <p class="text-base-content/60">We'll never send marketing emails. Only essential event notifications.</p>
-                  </div>
-                </div>
-                
-                <div class="flex items-start gap-4">
-                  <div class="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-primary/10 ">
-                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 class="font-semibold text-lg">Instant Setup</h4>
-                    <p class="text-base-content/60">Create your first event in under 30 seconds. No lengthy forms or verification.</p>
-                  </div>
-                </div>
+      <!-- One flow: headline → video → single narrative (steps with “what you get” folded in) -->
+      <section id="how-it-works" class="border-t border-base-300 bg-base-200 pt-12 md:pt-16 pb-16 md:pb-20">
+        <div class="max-w-3xl mx-auto px-6">
+          <p class="text-center text-xs uppercase tracking-widest text-base-content/50 mb-8">How it works</p>
+          <h2 class="text-3xl md:text-5xl font-bold leading-tight mb-5 text-center" style="font-family: var(--font-moi-display), 'Fraunces', serif;">
+            Create in seconds.<br />
+            Track everything live.
+          </h2>
+          <p class="text-lg md:text-xl text-base-content/80 leading-relaxed text-center mb-16">
+            One link for guests. Real-time totals. No spreadsheets.
+          </p>
+
+          <div class="max-w-2xl mx-auto mb-20">
+            <button
+              id="intro-video-trigger"
+              type="button"
+              aria-label="Play intro video"
+              aria-haspopup="dialog"
+              aria-controls="intro-video-modal"
+              class="group block w-full overflow-hidden rounded-xl border border-base-300 bg-base-100 shadow-2xl focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base-200"
+            >
+              <div class="relative aspect-video w-full bg-base-300 flex items-center justify-center">
+                <img src="/thumb.jpg" alt="" class="w-full h-full object-cover object-top-left" loading="lazy" />
+                <span class="absolute inset-0 flex items-center justify-center">
+                  <span class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-content shadow-xl transition-transform group-hover:scale-110" aria-hidden="true">
+                    <svg class="w-7 h-7 ml-1" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                  </span>
+                </span>
               </div>
-            </div>
-            
-            <div class="relative">
-              <!-- Phone mockup showing magic link -->
-              <div class="bg-base-200/50 border border-base-300 p-6 md:p-8 max-w-sm mx-auto">
-                <!-- Phone frame -->
-                <div class="bg-base-100 border border-base-300 rounded-2xl overflow-hidden shadow-xl">
-                  <!-- Phone notch -->
-                  <div class="h-6 bg-base-200 flex items-center justify-center">
-                    <div class="w-20 h-4 bg-base-300 rounded-full"></div>
+              <p class="text-sm text-base-content/60 py-3 px-4 text-center border-t border-base-300">Watch 1-min intro</p>
+            </button>
+          </div>
+
+          <!-- Single column: each step is one beat, “what you get” is part of the same beat -->
+          <ol class="relative list-none p-0 m-0 space-y-0">
+            {HOW_IT_WORKS.map((step, i) => {
+              const getLine = [
+                'No passwords. Your live dashboard is ready in seconds.',
+                'One link for everyone—share via WhatsApp, SMS, or QR.',
+                'Live totals, UPI & gifts in one place. Export anytime.',
+              ][i];
+              return (
+                <li class="relative pl-16 pb-16 last:pb-0">
+                  {i < HOW_IT_WORKS.length - 1 && (
+                    <span class="absolute left-7 top-14 bottom-0 w-px bg-primary/30" aria-hidden="true"></span>
+                  )}
+                  <div class="absolute left-0 top-0.5 w-14 h-14 flex items-center justify-center rounded-full bg-primary text-primary-content font-bold text-xl">
+                    {step.step}
                   </div>
-                  
-                  <!-- Email app mockup -->
-                  <div class="p-4 space-y-4">
-                    <div class="flex items-center gap-2 text-xs text-base-content/50">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                      </svg>
-                      <span>Inbox</span>
-                    </div>
-                    
-                    <!-- Email -->
-                    <div class="bg-primary/5 border border-primary/20 rounded-lg p-4 space-y-3">
-                      <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                          <span class="text-primary text-xs font-bold">M</span>
-                        </div>
-                        <div class="min-w-0 flex-1">
-                          <p class="font-semibold text-sm truncate">Moi</p>
-                          <p class="text-xs text-base-content/50">Sign in to your account</p>
-                        </div>
-                        <span class="text-xs text-base-content/40">now</span>
-                      </div>
-                      
-                      <div class="text-sm text-base-content/70">
-                        Click below to sign in. No password needed!
-                      </div>
-                      
-                      <button class="w-full py-2.5 bg-primary text-primary-content text-sm font-semibold rounded-lg">
-                        Sign in to Moi →
-                      </button>
-                      
-                      <p class="text-[10px] text-base-content/40 text-center">
-                        Link expires in 15 minutes
-                      </p>
-                    </div>
-                    
-                    <!-- Other emails (faded) -->
-                    <div class="opacity-30 space-y-2">
-                      <div class="h-12 bg-base-200 rounded-lg"></div>
-                      <div class="h-12 bg-base-200 rounded-lg"></div>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Caption -->
-                <p class="text-center text-sm text-base-content/50 mt-4">
-                  One click. You're in.
-                </p>
-              </div>
-              
-              <!-- Decorative elements -->
-              <div class="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 -z-10"></div>
-              <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-primary/5 -z-10"></div>
-            </div>
+                  <h3 class="font-semibold text-xl text-base-content mb-2">{step.title}</h3>
+                  <p class="text-base text-base-content/80 leading-relaxed mb-3">{step.description}</p>
+                  <p class="text-sm text-primary/90 font-medium">{getLine}</p>
+                </li>
+              );
+            })}
+          </ol>
+          <div class="text-center pt-8">
+            <a
+              href={signupUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-content font-semibold text-sm uppercase tracking-wider hover:bg-primary/90 transition-colors"
+            >
+              Get started free
+            </a>
+            <p class="mt-6 text-sm text-base-content/50">Free to use · No credit card · No spam</p>
           </div>
         </div>
       </section>
 
-      <!-- Final CTA Section -->
-      <section class="border-t border-base-300">
-        <div class="max-w-4xl mx-auto px-6 py-24 md:py-32 text-center">
-          <div class="space-y-8">
-            <h2 class="text-4xl md:text-6xl font-bold leading-tight">
-              Ready to simplify your<br/>
-              <span class="text-primary">gift tracking?</span>
-            </h2>
-            <p class="text-xl text-base-content/60 max-w-2xl mx-auto">
-              Join families across India who trust Moi to track their wedding and celebration contributions.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <a 
-                href={signupUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="px-10 py-5 bg-primary text-primary-content text-sm uppercase tracking-widest font-semibold hover:bg-primary/90 transition-all hover:scale-105 "
-              >
-                Create Your First Event
-              </a>
-            </div>
-            <p class="text-sm text-base-content/40">
-              Free to use • No credit card required • Setup in seconds
-            </p>
-          </div>
-        </div>
-      </section>
+      <div class="border-t border-base-300 py-6 text-center">
+        <p class="text-xs text-base-content/40">Built for Indian weddings and celebrations</p>
+      </div>
     </main>
 
     <Footer />
 
     <script is:inline>
       (function() {
-        const canvas = document.getElementById('dot-grid');
+        var canvas = document.getElementById('dot-grid');
         if (!canvas) return;
-        
-        const ctx = canvas.getContext('2d');
-        const heroSection = document.getElementById('hero-section');
-        
-        // Configuration - subtle base, punchy hover
-        const DOT_SPACING = 40;
-        const BASE_RADIUS = 1;
-        const MAX_RADIUS = 5;
-        const BASE_ALPHA = 0.08;
-        const MAX_ALPHA = 0.7;
-        const INFLUENCE_RADIUS = 120;
-        const LERP_FACTOR = 0.12;
-        
-        // Colors - gold/amber primary to match brand
-        const PRIMARY_COLOR = { r: 234, g: 179, b: 8 }; // Tailwind amber-500
-        const BASE_COLOR = { r: 255, g: 255, b: 255 };
-        
-        let mouseX = -1000;
-        let mouseY = -1000;
-        let dots = [];
-        let animationId = null;
-        let isVisible = true;
-        
+        var ctx = canvas.getContext('2d');
+        var heroSection = document.getElementById('hero-section');
+        var DOT_SPACING = 40;
+        var BASE_RADIUS = 1;
+        var MAX_RADIUS = 4;
+        var BASE_ALPHA = 0.06;
+        var MAX_ALPHA = 0.5;
+        var INFLUENCE_RADIUS = 100;
+        var LERP_FACTOR = 0.1;
+        var PRIMARY = { r: 234, g: 179, b: 8 };
+        var BASE = { r: 255, g: 255, b: 255 };
+        var mouseX = -1000, mouseY = -1000, dots = [], animationId = null, isVisible = true;
+
         function createDots() {
           dots = [];
-          const cols = Math.ceil(canvas.width / DOT_SPACING) + 1;
-          const rows = Math.ceil(canvas.height / DOT_SPACING) + 1;
-          
-          for (let row = 0; row < rows; row++) {
-            for (let col = 0; col < cols; col++) {
+          var cols = Math.ceil(canvas.width / DOT_SPACING) + 1;
+          var rows = Math.ceil(canvas.height / DOT_SPACING) + 1;
+          for (var r = 0; r < rows; r++)
+            for (var c = 0; c < cols; c++)
               dots.push({
-                x: col * DOT_SPACING,
-                y: row * DOT_SPACING,
+                x: c * DOT_SPACING,
+                y: r * DOT_SPACING,
                 currentRadius: BASE_RADIUS,
                 currentAlpha: BASE_ALPHA,
-                currentColor: { ...BASE_COLOR }
+                currentColor: { r: BASE.r, g: BASE.g, b: BASE.b }
               });
-            }
-          }
         }
-        
-        function lerp(start, end, factor) {
-          return start + (end - start) * factor;
-        }
-        
+        function lerp(a, b, t) { return a + (b - a) * t; }
         function resizeCanvas() {
-          const rect = heroSection.getBoundingClientRect();
-          const dpr = window.devicePixelRatio || 1;
-          
+          var rect = heroSection.getBoundingClientRect();
+          var dpr = window.devicePixelRatio || 1;
           canvas.width = rect.width * dpr;
           canvas.height = rect.height * dpr;
           canvas.style.width = rect.width + 'px';
           canvas.style.height = rect.height + 'px';
-          
           ctx.scale(dpr, dpr);
           createDots();
         }
-        
         function updateDot(dot) {
-          const dx = mouseX - dot.x;
-          const dy = mouseY - dot.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          let targetRadius = BASE_RADIUS;
-          let targetAlpha = BASE_ALPHA;
-          let targetColor = { ...BASE_COLOR };
-          
-          if (distance < INFLUENCE_RADIUS) {
-            const influence = 1 - (distance / INFLUENCE_RADIUS);
-            const easedInfluence = influence * influence; // Quadratic easing
-            
-            targetRadius = BASE_RADIUS + (MAX_RADIUS - BASE_RADIUS) * easedInfluence;
-            targetAlpha = BASE_ALPHA + (MAX_ALPHA - BASE_ALPHA) * easedInfluence;
-            
-            // Blend toward primary color
-            targetColor = {
-              r: BASE_COLOR.r + (PRIMARY_COLOR.r - BASE_COLOR.r) * easedInfluence,
-              g: BASE_COLOR.g + (PRIMARY_COLOR.g - BASE_COLOR.g) * easedInfluence,
-              b: BASE_COLOR.b + (PRIMARY_COLOR.b - BASE_COLOR.b) * easedInfluence
+          var dx = mouseX - dot.x, dy = mouseY - dot.y;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          var targetR = BASE_RADIUS, targetA = BASE_ALPHA, targetC = { r: BASE.r, g: BASE.g, b: BASE.b };
+          if (d < INFLUENCE_RADIUS) {
+            var inf = 1 - d / INFLUENCE_RADIUS;
+            inf = inf * inf;
+            targetR = BASE_RADIUS + (MAX_RADIUS - BASE_RADIUS) * inf;
+            targetA = BASE_ALPHA + (MAX_ALPHA - BASE_ALPHA) * inf;
+            targetC = {
+              r: BASE.r + (PRIMARY.r - BASE.r) * inf,
+              g: BASE.g + (PRIMARY.g - BASE.g) * inf,
+              b: BASE.b + (PRIMARY.b - BASE.b) * inf
             };
           }
-          
-          // Smooth interpolation
-          dot.currentRadius = lerp(dot.currentRadius, targetRadius, LERP_FACTOR);
-          dot.currentAlpha = lerp(dot.currentAlpha, targetAlpha, LERP_FACTOR);
-          dot.currentColor.r = lerp(dot.currentColor.r, targetColor.r, LERP_FACTOR);
-          dot.currentColor.g = lerp(dot.currentColor.g, targetColor.g, LERP_FACTOR);
-          dot.currentColor.b = lerp(dot.currentColor.b, targetColor.b, LERP_FACTOR);
+          dot.currentRadius = lerp(dot.currentRadius, targetR, LERP_FACTOR);
+          dot.currentAlpha = lerp(dot.currentAlpha, targetA, LERP_FACTOR);
+          dot.currentColor.r = lerp(dot.currentColor.r, targetC.r, LERP_FACTOR);
+          dot.currentColor.g = lerp(dot.currentColor.g, targetC.g, LERP_FACTOR);
+          dot.currentColor.b = lerp(dot.currentColor.b, targetC.b, LERP_FACTOR);
         }
-        
         function drawDot(dot) {
-          const { r, g, b } = dot.currentColor;
+          var c = dot.currentColor;
           ctx.beginPath();
           ctx.arc(dot.x, dot.y, dot.currentRadius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)}, ${dot.currentAlpha})`;
+          ctx.fillStyle = 'rgba(' + Math.round(c.r) + ',' + Math.round(c.g) + ',' + Math.round(c.b) + ',' + dot.currentAlpha + ')';
           ctx.fill();
         }
-        
         function animate() {
-          if (!isVisible) {
-            animationId = requestAnimationFrame(animate);
-            return;
-          }
-          
-          const rect = heroSection.getBoundingClientRect();
+          if (!isVisible) { animationId = requestAnimationFrame(animate); return; }
+          var rect = heroSection.getBoundingClientRect();
           ctx.clearRect(0, 0, rect.width, rect.height);
-          
-          for (const dot of dots) {
-            updateDot(dot);
-            drawDot(dot);
-          }
-          
+          for (var i = 0; i < dots.length; i++) { updateDot(dots[i]); drawDot(dots[i]); }
           animationId = requestAnimationFrame(animate);
         }
-        
-        function handleMouseMove(e) {
-          const rect = heroSection.getBoundingClientRect();
+        function onMove(e) {
+          var rect = heroSection.getBoundingClientRect();
           mouseX = e.clientX - rect.left;
           mouseY = e.clientY - rect.top;
         }
-        
-        function handleMouseLeave() {
-          mouseX = -1000;
-          mouseY = -1000;
-        }
-        
-        // Intersection Observer for performance
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach(entry => {
-              isVisible = entry.isIntersecting;
-            });
-          },
-          { threshold: 0 }
-        );
-        
-        // Initialize
+        function onLeave() { mouseX = -1000; mouseY = -1000; }
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) { isVisible = e.isIntersecting; });
+        }, { threshold: 0 });
         resizeCanvas();
         observer.observe(heroSection);
-        heroSection.addEventListener('mousemove', handleMouseMove);
-        heroSection.addEventListener('mouseleave', handleMouseLeave);
+        heroSection.addEventListener('mousemove', onMove);
+        heroSection.addEventListener('mouseleave', onLeave);
         window.addEventListener('resize', resizeCanvas);
         animate();
-        
-        // Cleanup on page navigation (for SPA)
         document.addEventListener('astro:before-swap', function() {
           if (animationId) cancelAnimationFrame(animationId);
           observer.disconnect();
-          heroSection.removeEventListener('mousemove', handleMouseMove);
-          heroSection.removeEventListener('mouseleave', handleMouseLeave);
+          heroSection.removeEventListener('mousemove', onMove);
+          heroSection.removeEventListener('mouseleave', onLeave);
           window.removeEventListener('resize', resizeCanvas);
         });
       })();
     </script>
+    <style is:global>
+      #hero-section h1,
+      #how-it-works h2,
+      main section:last-of-type h2 { --font-moi-display: 'Fraunces', serif; }
+    </style>
   </body>
 </html>
