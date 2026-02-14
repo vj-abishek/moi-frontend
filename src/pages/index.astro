@@ -75,54 +75,12 @@ const BENEFITS = FEATURES.slice(0, 3);
         <dialog id="intro-video-modal" class="backdrop:bg-black/70 bg-transparent p-0 border-none w-full max-w-none">
           <div class="min-h-screen w-full px-4 py-10 flex items-center justify-center">
             <div id="intro-video-dialog-content" class="w-full max-w-4xl bg-base-100 border border-base-300 shadow-2xl">
-              <video id="intro-video-player" class="w-full h-auto" data-src="/intro.mp4" controls playsinline autoplay>
+              <video id="intro-video-player" class="w-full h-auto" src="/intro.mp4" controls playsinline>
                 <track kind="subtitles" src="/intro-en.vtt" srclang="en" label="English" default />
               </video>
             </div>
           </div>
         </dialog>
-
-        <script is:inline>
-          (function() {
-            var videoModalReady = false;
-            function initVideoModal() {
-              if (videoModalReady) return;
-              var modal = document.getElementById('intro-video-modal');
-              var player = document.getElementById('intro-video-player');
-              var dialogContent = document.getElementById('intro-video-dialog-content');
-              if (!modal || !player || !dialogContent) return;
-              videoModalReady = true;
-              function resetPlayer() {
-                player.pause();
-                player.currentTime = 0;
-                player.removeAttribute('src');
-                player.load();
-              }
-              document.body.addEventListener('click', function(e) {
-                var trigger = e.target && e.target.closest && e.target.closest('#intro-video-trigger');
-                if (!trigger) return;
-                e.preventDefault();
-                if (!player.getAttribute('src')) {
-                  player.setAttribute('src', player.dataset.src || '');
-                  player.load();
-                }
-                modal.showModal();
-              });
-              modal.addEventListener('click', function(e) {
-                if (!dialogContent.contains(e.target)) modal.close();
-              });
-              modal.addEventListener('close', resetPlayer);
-            }
-            if (document.readyState === 'loading') {
-              document.addEventListener('DOMContentLoaded', initVideoModal);
-            } else {
-              initVideoModal();
-            }
-            window.addEventListener('pageshow', function(e) {
-              if (e.persisted) initVideoModal();
-            });
-          })();
-        </script>
       </section>
 
       <!-- One flow: headline → video → single narrative (steps with “what you get” folded in) -->
@@ -201,6 +159,27 @@ const BENEFITS = FEATURES.slice(0, 3);
     </main>
 
     <Footer />
+
+    <script>
+      (function () {
+        const modal = document.getElementById('intro-video-modal');
+        const content = document.getElementById('intro-video-dialog-content');
+        const trigger = document.getElementById('intro-video-trigger');
+        const player = document.getElementById('intro-video-player');
+        if (!modal || !content || !trigger) return;
+
+        trigger.addEventListener('click', () => {
+          modal.showModal();
+          if (player) player.play(); // user gesture = browser allows sound
+        });
+        modal.addEventListener('click', (e) => {
+          if (!content.contains(e.target)) modal.close();
+        });
+        modal.addEventListener('close', () => {
+          if (player) { player.pause(); player.currentTime = 0; }
+        });
+      })();
+    </script>
 
     <script is:inline>
       (function() {
