@@ -75,7 +75,7 @@ const BENEFITS = FEATURES.slice(0, 3);
         <dialog id="intro-video-modal" class="backdrop:bg-black/70 bg-transparent p-0 border-none w-full max-w-none">
           <div class="min-h-screen w-full px-4 py-10 flex items-center justify-center">
             <div id="intro-video-dialog-content" class="w-full max-w-4xl bg-base-100 border border-base-300 shadow-2xl">
-              <video id="intro-video-player" class="w-full h-auto" src="/intro.mp4" controls playsinline>
+              <video id="intro-video-player" class="w-full h-auto" data-src="/intro.mp4" controls playsinline>
                 <track kind="subtitles" src="/intro-en.vtt" srclang="en" label="English" default />
               </video>
             </div>
@@ -96,24 +96,34 @@ const BENEFITS = FEATURES.slice(0, 3);
           </p>
 
           <div class="max-w-2xl mx-auto mb-20">
-            <button
+            <div
               id="intro-video-trigger"
-              type="button"
-              aria-label="Play intro video"
-              aria-haspopup="dialog"
-              aria-controls="intro-video-modal"
-              class="group block w-full overflow-hidden border border-base-300 bg-base-100 shadow-2xl focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base-200"
+              class="group block w-full overflow-hidden border border-base-300 bg-base-100 shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base-200"
+              role="button"
+              tabindex="0"
+              aria-label="Intro video: hover to preview, click play to watch with sound"
             >
               <div class="relative aspect-video w-full bg-base-300 flex items-center justify-center overflow-hidden">
-                <Image src={thumb} alt="" class="w-full h-full object-cover object-top-left" loading="lazy" width={1280} height={720} />
-                <span class="absolute inset-0 flex items-center justify-center">
-                  <span class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-content shadow-xl transition-transform group-hover:scale-110" aria-hidden="true">
+                <Image src={thumb} alt="" class="w-full h-full object-cover object-top-left transition-opacity duration-200 group-hover:opacity-0 group-hover:pointer-events-none" loading="lazy" width={1280} height={720} />
+                <video
+                  id="intro-video-preview"
+                  class="absolute inset-0 w-full h-full object-cover object-top-left opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                  data-src="/intro.mp4"
+                  muted
+                  playsinline
+                  loop
+                  preload="none"
+                >
+                  <track kind="subtitles" src="/intro-en.vtt" srclang="en" label="English" default />
+                </video>
+                <span class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <span class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-content shadow-xl transition-transform group-hover:scale-110 pointer-events-auto" data-play-icon aria-hidden="true">
                     <svg class="w-7 h-7 ml-1" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
                   </span>
                 </span>
               </div>
-              <p class="text-sm text-base-content/60 py-3 px-4 text-center border-t border-base-300">Watch 1-min intro</p>
-            </button>
+              <p class="text-sm text-base-content/60 py-3 px-4 text-center border-t border-base-300">Hover to preview · Click play for full video with sound</p>
+            </div>
           </div>
 
           <!-- Single column: each step is one beat, “what you get” is part of the same beat -->
@@ -165,13 +175,35 @@ const BENEFITS = FEATURES.slice(0, 3);
         const modal = document.getElementById('intro-video-modal');
         const content = document.getElementById('intro-video-dialog-content');
         const trigger = document.getElementById('intro-video-trigger');
+        const preview = document.getElementById('intro-video-preview');
         const player = document.getElementById('intro-video-player');
         if (!modal || !content || !trigger) return;
 
-        trigger.addEventListener('click', () => {
-          modal.showModal();
-          if (player) player.play(); // user gesture = browser allows sound
+        trigger.addEventListener('mouseenter', () => {
+          if (!preview) return;
+          if (!preview.src) { preview.src = preview.dataset.src || ''; preview.load(); }
+          preview.play();
         });
+        trigger.addEventListener('mouseleave', () => {
+          if (preview) { preview.pause(); preview.currentTime = 0; }
+        });
+
+        trigger.addEventListener('click', (e) => {
+          if (!e.target.closest('[data-play-icon]')) return;
+          if (!player.src) { player.src = player.dataset.src || ''; player.load(); }
+          if (preview && player) player.currentTime = preview.currentTime;
+          modal.showModal();
+          if (player) player.play();
+        });
+        trigger.addEventListener('keydown', (e) => {
+          if (e.key !== 'Enter' && e.key !== ' ') return;
+          e.preventDefault();
+          if (!player.src) { player.src = player.dataset.src || ''; player.load(); }
+          if (preview && player) player.currentTime = preview.currentTime;
+          modal.showModal();
+          if (player) player.play();
+        });
+
         modal.addEventListener('click', (e) => {
           if (!content.contains(e.target)) modal.close();
         });
