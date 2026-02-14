@@ -188,8 +188,7 @@ const BENEFITS = FEATURES.slice(0, 3);
           if (preview) { preview.pause(); preview.currentTime = 0; }
         });
 
-        trigger.addEventListener('click', (e) => {
-          if (!e.target.closest('[data-play-icon]')) return;
+        trigger.addEventListener('click', () => {
           if (!player.src) { player.src = player.dataset.src || ''; player.load(); }
           modal.showModal();
           if (player) { player.currentTime = 0; player.play(); }
