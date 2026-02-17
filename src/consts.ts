@@ -1,4 +1,6 @@
 export const SITE_TITLE = 'Moi';
+/** Keyword-rich title for homepage tab/snippet (SEO) */
+export const SITE_TITLE_HOME = 'Moi – Gift Tracking for Weddings & Celebrations';
 export const SITE_DESCRIPTION = 'Track gift contributions during weddings and celebrations. Never miss a மொய்.';
 
 // App subdomain URL builder - prefixes 'app.' to the current domain
@@ -21,8 +23,12 @@ export const NAV_LINKS = [
 
 type FooterLink = { href: string; label: string; external?: boolean };
 
+/** Production app signup URL (used in footer; in-page CTAs use getAppUrl for same-origin) */
+export const APP_SIGNUP_URL = 'https://app.getmoi.in/signup';
+
 export const FOOTER_LINKS: { product: FooterLink[]; company: FooterLink[]; legal: FooterLink[] } = {
   product: [
+    { href: APP_SIGNUP_URL, label: 'Get started', external: true },
     { href: '/blog', label: 'Blog' },
     { href: 'https://merg.openstatus.dev', label: 'Status', external: true },
   ],

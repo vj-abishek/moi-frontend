@@ -5,14 +5,20 @@ import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_TITLE } from '../../consts';
-import { generateBlogSchema } from '../../seo';
+import { generateBlogSchema, generateBreadcrumbSchema, combineSchemas } from '../../seo';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const siteOrigin = Astro.site ? new URL(Astro.site).origin : new URL(canonicalUrl).origin;
 const blogSchema = generateBlogSchema(canonicalUrl);
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: 'Home', url: siteOrigin + '/' },
+  { name: 'Blog', url: canonicalUrl },
+]);
+const schema = combineSchemas(blogSchema, breadcrumbSchema);
 ---
 
 <!doctype html>
@@ -21,7 +27,7 @@ const blogSchema = generateBlogSchema(canonicalUrl);
     <BaseHead 
       title={`Blog | ${SITE_TITLE}`} 
       description="Thoughts, tutorials, and updates about Moi - the modern gift contribution tracking platform for Indian weddings and celebrations." 
-      schema={blogSchema}
+      schema={schema}
       keywords={['moi blog', 'gift tracking blog', 'wedding tips', 'Indian wedding', 'celebration planning']}
     />
   </head>
@@ -29,6 +35,15 @@ const blogSchema = generateBlogSchema(canonicalUrl);
     <Header />
     
     <main class="flex-1">
+      <!-- Breadcrumbs -->
+      <nav class="max-w-5xl mx-auto px-6 pt-6" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-base-content/50">
+          <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="text-base-content/80" aria-current="page">Blog</li>
+        </ol>
+      </nav>
+
       <!-- Page Header -->
       <section class="border-b border-base-300">
         <div class="max-w-5xl mx-auto px-6 py-16 md:py-24">
