@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE, FEATURES, HOW_IT_WORKS, getAppUrl } from '../consts';
+import { SITE_DESCRIPTION, SITE_TITLE_HOME, FEATURES, HOW_IT_WORKS, getAppUrl } from '../consts';
 import { generateSoftwareApplicationSchema, generateWebPageSchema } from '../seo';
 import thumb from '../assets/thumb.jpg';
 
@@ -13,7 +13,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 const softwareAppSchema = generateSoftwareApplicationSchema();
 const webPageSchema = generateWebPageSchema(
   canonicalUrl,
-  SITE_TITLE,
+  SITE_TITLE_HOME,
   SITE_DESCRIPTION
 );
 
@@ -25,7 +25,7 @@ const BENEFITS = FEATURES.slice(0, 3);
 <html lang="en">
   <head>
     <BaseHead 
-      title={SITE_TITLE} 
+      title={SITE_TITLE_HOME} 
       description={SITE_DESCRIPTION} 
       schema={[softwareAppSchema, webPageSchema]}
     />

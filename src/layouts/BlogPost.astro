@@ -5,8 +5,8 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
-import { SITE_TITLE } from '../consts';
-import { generateBlogPostingSchema, SEO_CONFIG } from '../seo';
+import { SITE_TITLE, getAppUrl } from '../consts';
+import { generateBlogPostingSchema, generateBreadcrumbSchema, combineSchemas, SEO_CONFIG } from '../seo';
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -31,6 +31,17 @@ const blogPostSchema = generateBlogPostingSchema(
   dateModified,
   heroImageUrl
 );
+
+const siteOrigin = Astro.site ? new URL(Astro.site).origin : new URL(canonicalUrl).origin;
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: 'Home', url: siteOrigin + '/' },
+  { name: 'Blog', url: siteOrigin + '/blog/' },
+  { name: title, url: canonicalUrl },
+]);
+const schema = combineSchemas(blogPostSchema, breadcrumbSchema);
+
+const signupUrl = getAppUrl('/signup', Astro.url);
+const heroAlt = description ? `${title}: ${description}` : title;
 ---
 
 <html lang="en">
@@ -39,7 +50,7 @@ const blogPostSchema = generateBlogPostingSchema(
       title={`${title} | ${SITE_TITLE}`} 
       description={description} 
       image={heroImage}
-      schema={blogPostSchema}
+      schema={schema}
       dateModified={dateModified}
       keywords={['moi', 'gift tracking', 'wedding', title.toLowerCase()]}
     />
@@ -50,6 +61,17 @@ const blogPostSchema = generateBlogPostingSchema(
     
     <main class="flex-1">
       <article>
+        <!-- Breadcrumbs -->
+        <nav class="max-w-3xl mx-auto px-6 pt-6" aria-label="Breadcrumb">
+          <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-base-content/50">
+            <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+            <li aria-hidden="true">/</li>
+            <li><a href="/blog/" class="hover:text-primary transition-colors">Blog</a></li>
+            <li aria-hidden="true">/</li>
+            <li class="text-base-content/80" aria-current="page">{title}</li>
+          </ol>
+        </nav>
+
         <!-- Hero Section -->
         <header class="border-b border-base-300">
           <div class="max-w-3xl mx-auto px-6 py-16 md:py-24">
@@ -79,7 +101,7 @@ const blogPostSchema = generateBlogPostingSchema(
           <div class="max-w-4xl mx-auto px-6 py-8">
             <Image 
               src={heroImage} 
-              alt="" 
+              alt={heroAlt} 
               width={960} 
               height={480}
               class="w-full h-auto border border-base-300"
@@ -94,8 +116,20 @@ const blogPostSchema = generateBlogPostingSchema(
           </div>
         </div>
 
-        <!-- Back to Blog -->
-        <div class="max-w-3xl mx-auto px-6 pb-16">
+        <!-- CTA + Back to Blog -->
+        <div class="max-w-3xl mx-auto px-6 pb-16 space-y-10">
+          <div class="rounded-xl border border-base-300 bg-base-200/50 p-6 md:p-8 text-center">
+            <p class="text-lg font-medium text-base-content mb-3">Try Moi for your next celebration</p>
+            <p class="text-sm text-base-content/60 mb-5 max-w-md mx-auto">One link for guests. Real-time tracking. UPI, cash & gifts in one place.</p>
+            <a
+              href={signupUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-content font-semibold text-sm uppercase tracking-wider hover:bg-primary/90 transition-colors"
+            >
+              Get started free
+            </a>
+          </div>
           <a 
             href="/blog" 
             class="inline-flex items-center gap-2 text-sm uppercase tracking-widest text-base-content/40 hover:text-white transition-colors"
