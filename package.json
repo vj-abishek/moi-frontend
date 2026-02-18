@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/getmoi/landing"
+    "url": "https://github.com/vj-abishek/moi-frontend"
   },
   "scripts": {
     "dev": "astro dev",

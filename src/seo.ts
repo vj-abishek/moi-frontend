@@ -6,6 +6,8 @@ export const SEO_CONFIG = {
   schemaAppName: 'Moi – Wedding Gift Tracker',
   siteUrl: 'https://getmoi.in',
   appUrl: 'https://app.getmoi.in',
+  /** Landing page source only (not the app). For sameAs – ties this site to getmoi for Google. */
+  repositoryUrl: 'https://github.com/vj-abishek/moi-frontend',
   author: 'Moi',
   email: 'abishek@merg.cc',
   locale: 'en_IN',
@@ -48,6 +50,7 @@ export function generateOrganizationSchema(): SchemaOrg {
     logo: SEO_CONFIG.logoUrl,
     description: SEO_CONFIG.description,
     email: SEO_CONFIG.email,
+    ...(SEO_CONFIG.repositoryUrl && { sameAs: [SEO_CONFIG.repositoryUrl] }),
     contactPoint: {
       '@type': 'ContactPoint',
       email: SEO_CONFIG.email,
@@ -68,6 +71,7 @@ export function generateWebSiteSchema(): SchemaOrg {
     url: SEO_CONFIG.siteUrl,
     description: SEO_CONFIG.description,
     inLanguage: 'en-IN',
+    ...(SEO_CONFIG.repositoryUrl && { sameAs: [SEO_CONFIG.repositoryUrl] }),
     publisher: {
       '@type': 'Organization',
       name: SEO_CONFIG.siteName,

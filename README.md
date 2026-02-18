@@ -4,6 +4,8 @@ Marketing site for [Moi](https://getmoi.in) – a wedding & celebration gift tra
 
 **Live site:** [getmoi.in](https://getmoi.in) · **Sign up:** [app.getmoi.in](https://app.getmoi.in/signup)
 
+This repo is the **landing page** only (marketing site). The Moi app lives elsewhere.
+
 ## Stack
 
 - [Astro](https://astro.build) 5
@@ -24,7 +26,7 @@ Marketing site for [Moi](https://getmoi.in) – a wedding & celebration gift tra
 If you’re reusing this as a template, update:
 
 1. **`astro.config.mjs`** – `site` (canonical origin).
-2. **`src/seo.ts`** – `SEO_CONFIG`: `siteUrl`, `appUrl`, `siteName`, `schemaAppName`, `appDescription`, `description`, `email`, `logoUrl`, `keywords`.
+2. **`src/seo.ts`** – `SEO_CONFIG`: `siteUrl`, `appUrl`, `repositoryUrl`, `siteName`, `schemaAppName`, `appDescription`, `description`, `email`, `logoUrl`, `keywords`.
 3. **`src/consts.ts`** – `SITE_TITLE`, `SITE_TITLE_HOME`, `SITE_DESCRIPTION`, `APP_SIGNUP_URL`, `FOOTER_LINKS` (and any feature copy you want to change).
 
 SEO (titles, meta, Schema.org) is driven from `src/seo.ts` and `src/consts.ts`; the homepage uses VideoObject + SoftwareApplication schema for rich results.
