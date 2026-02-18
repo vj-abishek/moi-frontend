@@ -117,7 +117,7 @@ export function generateVideoObjectSchema(
     description: string;
     thumbnailUrl: string;
     duration?: string; // ISO 8601 e.g. "PT1M" for 1 minute
-    uploadDate?: string; // ISO 8601 date
+    uploadDate?: string; // ISO 8601 datetime with timezone (e.g. 2024-01-01T00:00:00Z)
   }
 ): SchemaOrg {
   return {
@@ -128,7 +128,7 @@ export function generateVideoObjectSchema(
     thumbnailUrl: options.thumbnailUrl,
     contentUrl,
     embedUrl,
-    uploadDate: options.uploadDate ?? '2024-01-01',
+    uploadDate: options.uploadDate ?? '2024-01-01T00:00:00Z',
     ...(options.duration && { duration: options.duration }),
     publisher: {
       '@type': 'Organization',
