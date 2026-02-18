@@ -174,57 +174,64 @@ const BENEFITS = FEATURES.slice(0, 3);
 
     <script>
       (function () {
-        const modal = document.getElementById('intro-video-modal');
-        const content = document.getElementById('intro-video-dialog-content');
-        const trigger = document.getElementById('intro-video-trigger');
-        const player = document.getElementById('intro-video-player');
-        const loadingEl = document.getElementById('intro-video-loading');
-        if (!modal || !content || !trigger || !player) return;
+        function initVideoModal() {
+          const modal = document.getElementById('intro-video-modal');
+          const content = document.getElementById('intro-video-dialog-content');
+          const trigger = document.getElementById('intro-video-trigger');
+          const player = document.getElementById('intro-video-player');
+          const loadingEl = document.getElementById('intro-video-loading');
+          if (!modal || !content || !trigger || !player) return;
+          if (trigger.dataset.videoModalInited === 'true') return;
+          trigger.dataset.videoModalInited = 'true';
 
-        function showLoading() {
-          if (loadingEl) { loadingEl.classList.remove('hidden'); }
-          player.classList.add('opacity-0');
-        }
-        function hideLoadingAndPlay() {
-          if (loadingEl) { loadingEl.classList.add('hidden'); }
-          player.classList.remove('opacity-0');
-          player.currentTime = 0;
-          player.play().catch(function () {});
-        }
+          function showLoading() {
+            if (loadingEl) { loadingEl.classList.remove('hidden'); }
+            player.classList.add('opacity-0');
+          }
+          function hideLoadingAndPlay() {
+            if (loadingEl) { loadingEl.classList.add('hidden'); }
+            player.classList.remove('opacity-0');
+            player.currentTime = 0;
+            player.play().catch(function () {});
+          }
 
-        function openModal() {
-          modal.showModal();
-          if (!player.src || player.src === '' || player.src === window.location.href) {
-            showLoading();
-            player.src = player.dataset?.src || '/intro.mp4';
-            player.load();
-            player.addEventListener('canplay', function onCanPlay() {
-              player.removeEventListener('canplay', onCanPlay);
+          function openModal() {
+            modal.showModal();
+            if (!player.src || player.src === '' || player.src === window.location.href) {
+              showLoading();
+              player.src = player.dataset?.src || '/intro.mp4';
+              player.load();
+              player.addEventListener('canplay', function onCanPlay() {
+                player.removeEventListener('canplay', onCanPlay);
+                hideLoadingAndPlay();
+              }, { once: true });
+              player.addEventListener('error', function () {
+                if (loadingEl) { loadingEl.querySelector('p').textContent = 'Could not load video.'; }
+              }, { once: true });
+            } else {
               hideLoadingAndPlay();
-            }, { once: true });
-            player.addEventListener('error', function () {
-              if (loadingEl) { loadingEl.querySelector('p').textContent = 'Could not load video.'; }
-            }, { once: true });
-          } else {
-            hideLoadingAndPlay();
+            }
           }
+
+          trigger.addEventListener('click', openModal);
+          trigger.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              openModal();
+            }
+          });
+
+          modal.addEventListener('click', function (e) {
+            if (!content.contains(e.target)) modal.close();
+          });
+          modal.addEventListener('close', function () {
+            player.pause();
+            player.currentTime = 0;
+          });
         }
 
-        trigger.addEventListener('click', openModal);
-        trigger.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            openModal();
-          }
-        });
-
-        modal.addEventListener('click', function (e) {
-          if (!content.contains(e.target)) modal.close();
-        });
-        modal.addEventListener('close', function () {
-          player.pause();
-          player.currentTime = 0;
-        });
+        document.addEventListener('astro:page-load', initVideoModal);
+        initVideoModal();
       })();
     </script>
 
