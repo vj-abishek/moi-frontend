@@ -1,62 +1,50 @@
-# Astro Starter Kit: Blog
+# Moi landing page
 
-```sh
-npm create astro@latest -- --template blog
+Marketing site for [Moi](https://getmoi.in) – a wedding & celebration gift tracker (UPI, cash, one link for guests).
+
+**Live site:** [getmoi.in](https://getmoi.in) · **Sign up:** [app.getmoi.in](https://app.getmoi.in/signup)
+
+## Stack
+
+- [Astro](https://astro.build) 5
+- [Tailwind CSS](https://tailwindcss.com) 4 + [DaisyUI](https://daisyui.com)
+- Deploy: Cloudflare (static + adapter)
+
+## Commands
+
+| Command           | Action                          |
+| ----------------- | ------------------------------- |
+| `npm install`     | Install dependencies            |
+| `npm run dev`     | Dev server at `localhost:4321`   |
+| `npm run build`   | Production build to `./dist/`    |
+| `npm run preview` | Preview production build locally |
+
+## Customizing for your fork
+
+If you’re reusing this as a template, update:
+
+1. **`astro.config.mjs`** – `site` (canonical origin).
+2. **`src/seo.ts`** – `SEO_CONFIG`: `siteUrl`, `appUrl`, `siteName`, `schemaAppName`, `appDescription`, `description`, `email`, `logoUrl`, `keywords`.
+3. **`src/consts.ts`** – `SITE_TITLE`, `SITE_TITLE_HOME`, `SITE_DESCRIPTION`, `APP_SIGNUP_URL`, `FOOTER_LINKS` (and any feature copy you want to change).
+
+SEO (titles, meta, Schema.org) is driven from `src/seo.ts` and `src/consts.ts`; the homepage uses VideoObject + SoftwareApplication schema for rich results.
+
+## Project structure
+
 ```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
+├── public/           # Static assets (favicon, images, intro video)
 ├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
+│   ├── assets/       # Processed images (e.g. hero thumb)
+│   ├── components/   # BaseHead, Header, Footer, etc.
+│   ├── layouts/      # BlogPost, PageLayout
+│   ├── pages/        # Routes (index, blog, faq, about, …)
+│   ├── content/      # Blog collection (MDX)
+│   ├── consts.ts     # Copy, nav, footer links, app URL
+│   └── seo.ts        # Schema.org generators + SEO_CONFIG
 ├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+└── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## License
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+MIT – see [LICENSE](LICENSE).
