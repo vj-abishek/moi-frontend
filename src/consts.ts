@@ -34,7 +34,7 @@ export const FOOTER_LINKS: { product: FooterLink[]; company: FooterLink[]; legal
   ],
   company: [
     { href: '/about', label: 'About' },
-    { href: 'https://github.com/vj-abishek/moi-frontend', label: 'Source (landing)', external: true },
+    { href: 'https://github.com/vj-abishek/moi-frontend', label: 'GitHub', external: true },
     { href: '/trust', label: 'Trust' },
     { href: '/faq', label: 'FAQ' },
     { href: '/support', label: 'Support' },
