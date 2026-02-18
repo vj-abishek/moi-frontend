@@ -82,8 +82,13 @@ const BENEFITS = FEATURES.slice(0, 3);
 
         <dialog id="intro-video-modal" class="backdrop:bg-black/70 bg-transparent p-0 border-none w-full max-w-none">
           <div class="min-h-screen w-full px-4 py-10 flex items-center justify-center">
-            <div id="intro-video-dialog-content" class="w-full max-w-4xl bg-base-100 border border-base-300 shadow-2xl">
-              <video id="intro-video-player" class="w-full h-auto" src="/intro.mp4" preload="metadata" controls playsinline>
+            <div id="intro-video-dialog-content" class="relative w-full max-w-4xl bg-base-100 border border-base-300 shadow-2xl overflow-hidden">
+              <!-- Loading state: shown until video is ready (no src on initial load = no request = faster page) -->
+              <div id="intro-video-loading" class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-base-200 min-h-[280px]" aria-live="polite">
+                <span class="loading loading-spinner loading-lg text-primary" aria-hidden="true"></span>
+                <p class="text-sm text-base-content/60">Loading video…</p>
+              </div>
+              <video id="intro-video-player" class="w-full h-auto relative z-10 opacity-0 transition-opacity duration-200" data-src="/intro.mp4" preload="none" controls playsinline>
                 <track kind="subtitles" src="/intro-en.vtt" srclang="en" label="English" default />
               </video>
             </div>
@@ -109,23 +114,12 @@ const BENEFITS = FEATURES.slice(0, 3);
               class="group block w-full overflow-hidden border border-base-300 bg-base-100 shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base-200"
               role="button"
               tabindex="0"
-              aria-label="Intro video: hover to preview, click play to watch with sound"
+              aria-label="Intro video: click to watch in popup"
             >
               <div class="relative aspect-video w-full bg-base-300 flex items-center justify-center overflow-hidden">
-                <Image src={thumb} alt="" class="w-full h-full object-cover object-top-left transition-opacity duration-200 group-hover:opacity-0 group-hover:pointer-events-none" loading="lazy" width={1280} height={720} />
-                <video
-                  id="intro-video-preview"
-                  class="absolute inset-0 w-full h-full object-cover object-top-left opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-                  src="/intro.mp4"
-                  muted
-                  playsinline
-                  loop
-                  preload="metadata"
-                >
-                  <track kind="subtitles" src="/intro-en.vtt" srclang="en" label="English" default />
-                </video>
-                <span class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <span class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-content shadow-xl transition-transform group-hover:scale-110 pointer-events-auto" data-play-icon aria-hidden="true">
+                <Image src={thumb} alt="" class="w-full h-full object-cover object-top-left" loading="lazy" width={1280} height={720} />
+                <span class="absolute inset-0 flex items-center justify-center">
+                  <span class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-content shadow-xl transition-transform group-hover:scale-110" data-play-icon aria-hidden="true">
                     <svg class="w-7 h-7 ml-1" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
                   </span>
                 </span>
@@ -183,37 +177,53 @@ const BENEFITS = FEATURES.slice(0, 3);
         const modal = document.getElementById('intro-video-modal');
         const content = document.getElementById('intro-video-dialog-content');
         const trigger = document.getElementById('intro-video-trigger');
-        const preview = document.getElementById('intro-video-preview');
         const player = document.getElementById('intro-video-player');
-        if (!modal || !content || !trigger) return;
+        const loadingEl = document.getElementById('intro-video-loading');
+        if (!modal || !content || !trigger || !player) return;
 
-        trigger.addEventListener('mouseenter', () => {
-          if (!preview) return;
-          if (!preview.src) { preview.src = preview.dataset.src || '/intro.mp4'; preview.load(); }
-          preview.play();
-        });
-        trigger.addEventListener('mouseleave', () => {
-          if (preview) { preview.pause(); preview.currentTime = 0; }
-        });
+        function showLoading() {
+          if (loadingEl) { loadingEl.classList.remove('hidden'); }
+          player.classList.add('opacity-0');
+        }
+        function hideLoadingAndPlay() {
+          if (loadingEl) { loadingEl.classList.add('hidden'); }
+          player.classList.remove('opacity-0');
+          player.currentTime = 0;
+          player.play().catch(function () {});
+        }
 
-        trigger.addEventListener('click', () => {
-          if (!player.src) { player.src = player.dataset.src || '/intro.mp4'; player.load(); }
+        function openModal() {
           modal.showModal();
-          if (player) { player.currentTime = 0; player.play(); }
-        });
-        trigger.addEventListener('keydown', (e) => {
-          if (e.key !== 'Enter' && e.key !== ' ') return;
-          e.preventDefault();
-          if (!player.src) { player.src = player.dataset.src || '/intro.mp4'; player.load(); }
-          modal.showModal();
-          if (player) { player.currentTime = 0; player.play(); }
+          if (!player.src || player.src === '' || player.src === window.location.href) {
+            showLoading();
+            player.src = player.dataset?.src || '/intro.mp4';
+            player.load();
+            player.addEventListener('canplay', function onCanPlay() {
+              player.removeEventListener('canplay', onCanPlay);
+              hideLoadingAndPlay();
+            }, { once: true });
+            player.addEventListener('error', function () {
+              if (loadingEl) { loadingEl.querySelector('p').textContent = 'Could not load video.'; }
+            }, { once: true });
+          } else {
+            hideLoadingAndPlay();
+          }
+        }
+
+        trigger.addEventListener('click', openModal);
+        trigger.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openModal();
+          }
         });
 
-        modal.addEventListener('click', (e) => {
+        modal.addEventListener('click', function (e) {
           if (!content.contains(e.target)) modal.close();
         });
-        modal.addEventListener('close', () => {
-          if (player) { player.pause(); player.currentTime = 0; }
+        modal.addEventListener('close', function () {
+          player.pause();
+          player.currentTime = 0;
         });
       })();
     </script>
