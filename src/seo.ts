@@ -106,6 +106,40 @@ export function generateSoftwareApplicationSchema(): SchemaOrg {
 }
 
 /**
+ * Generate VideoObject schema for crawlable video on a page
+ * @see https://developers.google.com/search/docs/appearance/google-images-video
+ */
+export function generateVideoObjectSchema(
+  embedUrl: string,
+  contentUrl: string,
+  options: {
+    name: string;
+    description: string;
+    thumbnailUrl: string;
+    duration?: string; // ISO 8601 e.g. "PT1M" for 1 minute
+    uploadDate?: string; // ISO 8601 date
+  }
+): SchemaOrg {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: options.name,
+    description: options.description,
+    thumbnailUrl: options.thumbnailUrl,
+    contentUrl,
+    embedUrl,
+    uploadDate: options.uploadDate ?? '2024-01-01',
+    ...(options.duration && { duration: options.duration }),
+    publisher: {
+      '@type': 'Organization',
+      name: SEO_CONFIG.siteName,
+      url: SEO_CONFIG.siteUrl,
+      logo: SEO_CONFIG.logoUrl,
+    },
+  };
+}
+
+/**
  * Generate WebPage schema
  */
 export function generateWebPageSchema(

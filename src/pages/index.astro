@@ -4,11 +4,13 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE_HOME, FEATURES, HOW_IT_WORKS, getAppUrl } from '../consts';
-import { generateSoftwareApplicationSchema, generateWebPageSchema } from '../seo';
+import { generateSoftwareApplicationSchema, generateVideoObjectSchema, generateWebPageSchema } from '../seo';
 import thumb from '../assets/thumb.jpg';
 
 const signupUrl = getAppUrl('/signup', Astro.url);
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const videoContentUrl = new URL('/intro.mp4', Astro.site).toString();
+const videoThumbnailUrl = new URL(thumb.src, Astro.site).toString();
 
 const softwareAppSchema = generateSoftwareApplicationSchema();
 const webPageSchema = generateWebPageSchema(
@@ -16,6 +18,12 @@ const webPageSchema = generateWebPageSchema(
   SITE_TITLE_HOME,
   SITE_DESCRIPTION
 );
+const videoSchema = generateVideoObjectSchema(canonicalUrl, videoContentUrl, {
+  name: 'Moi – How to track wedding & celebration gifts in 1 minute',
+  description: 'Quick intro to Moi: create an event, share one link with guests, track UPI and cash contributions in real time. No spreadsheets.',
+  thumbnailUrl: videoThumbnailUrl,
+  duration: 'PT1M',
+});
 
 // Top 3 benefits for hero / social proof
 const BENEFITS = FEATURES.slice(0, 3);
@@ -27,7 +35,7 @@ const BENEFITS = FEATURES.slice(0, 3);
     <BaseHead 
       title={SITE_TITLE_HOME} 
       description={SITE_DESCRIPTION} 
-      schema={[softwareAppSchema, webPageSchema]}
+      schema={[softwareAppSchema, webPageSchema, videoSchema]}
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -75,7 +83,7 @@ const BENEFITS = FEATURES.slice(0, 3);
         <dialog id="intro-video-modal" class="backdrop:bg-black/70 bg-transparent p-0 border-none w-full max-w-none">
           <div class="min-h-screen w-full px-4 py-10 flex items-center justify-center">
             <div id="intro-video-dialog-content" class="w-full max-w-4xl bg-base-100 border border-base-300 shadow-2xl">
-              <video id="intro-video-player" class="w-full h-auto" data-src="/intro.mp4" controls playsinline>
+              <video id="intro-video-player" class="w-full h-auto" src="/intro.mp4" preload="metadata" controls playsinline>
                 <track kind="subtitles" src="/intro-en.vtt" srclang="en" label="English" default />
               </video>
             </div>
@@ -108,11 +116,11 @@ const BENEFITS = FEATURES.slice(0, 3);
                 <video
                   id="intro-video-preview"
                   class="absolute inset-0 w-full h-full object-cover object-top-left opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-                  data-src="/intro.mp4"
+                  src="/intro.mp4"
                   muted
                   playsinline
                   loop
-                  preload="none"
+                  preload="metadata"
                 >
                   <track kind="subtitles" src="/intro-en.vtt" srclang="en" label="English" default />
                 </video>
@@ -181,7 +189,7 @@ const BENEFITS = FEATURES.slice(0, 3);
 
         trigger.addEventListener('mouseenter', () => {
           if (!preview) return;
-          if (!preview.src) { preview.src = preview.dataset.src || ''; preview.load(); }
+          if (!preview.src) { preview.src = preview.dataset.src || '/intro.mp4'; preview.load(); }
           preview.play();
         });
         trigger.addEventListener('mouseleave', () => {
@@ -189,14 +197,14 @@ const BENEFITS = FEATURES.slice(0, 3);
         });
 
         trigger.addEventListener('click', () => {
-          if (!player.src) { player.src = player.dataset.src || ''; player.load(); }
+          if (!player.src) { player.src = player.dataset.src || '/intro.mp4'; player.load(); }
           modal.showModal();
           if (player) { player.currentTime = 0; player.play(); }
         });
         trigger.addEventListener('keydown', (e) => {
           if (e.key !== 'Enter' && e.key !== ' ') return;
           e.preventDefault();
-          if (!player.src) { player.src = player.dataset.src || ''; player.load(); }
+          if (!player.src) { player.src = player.dataset.src || '/intro.mp4'; player.load(); }
           modal.showModal();
           if (player) { player.currentTime = 0; player.play(); }
         });
