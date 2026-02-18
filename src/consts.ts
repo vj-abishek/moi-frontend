@@ -1,6 +1,6 @@
 export const SITE_TITLE = 'Moi';
-/** Keyword-rich title for homepage tab/snippet (SEO) */
-export const SITE_TITLE_HOME = 'Moi – Gift Tracking for Weddings & Celebrations';
+/** Keyword-rich title for homepage tab/snippet (SEO). Lead with what it is so search shows it. */
+export const SITE_TITLE_HOME = 'Wedding Gift Tracker | Moi – Track UPI, Cash & Gifts in Real Time';
 export const SITE_DESCRIPTION = 'Track gift contributions during weddings and celebrations. Never miss a மொய்.';
 
 // App subdomain URL builder - prefixes 'app.' to the current domain

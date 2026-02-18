@@ -2,12 +2,16 @@
 
 export const SEO_CONFIG = {
   siteName: 'Moi',
+  /** Name shown in SoftwareApplication rich result – descriptive so search doesn’t show only “Moi” */
+  schemaAppName: 'Moi – Wedding Gift Tracker',
   siteUrl: 'https://getmoi.in',
   appUrl: 'https://app.getmoi.in',
   author: 'Moi',
   email: 'abishek@merg.cc',
   locale: 'en_IN',
   logoUrl: 'https://getmoi.in/logo.png',
+  /** Short, keyword-rich description for SoftwareApplication rich results */
+  appDescription: 'Free wedding gift tracker app. Track UPI, cash and gifts in real time. One link for guests.',
   keywords: [
     'moi',
     'மொய்',
@@ -73,14 +77,14 @@ export function generateWebSiteSchema(): SchemaOrg {
 }
 
 /**
- * Generate SoftwareApplication schema - for home page
+ * Generate SoftwareApplication schema - for home page (rich results for "Moi app" etc.)
  */
 export function generateSoftwareApplicationSchema(): SchemaOrg {
   return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: SEO_CONFIG.siteName,
-    description: 'Track gift contributions (மொய்) during weddings, birthdays, and celebrations. Real-time tracking, UPI payments, and easy sharing.',
+    name: SEO_CONFIG.schemaAppName,
+    description: SEO_CONFIG.appDescription,
     url: SEO_CONFIG.siteUrl,
     applicationCategory: 'FinanceApplication',
     operatingSystem: 'Web',
@@ -101,6 +105,7 @@ export function generateSoftwareApplicationSchema(): SchemaOrg {
     author: {
       '@type': 'Organization',
       name: SEO_CONFIG.siteName,
+      url: SEO_CONFIG.siteUrl,
     },
   };
 }
