@@ -2,6 +2,7 @@
 title: 'How to Collect மொய் Using a QR Code on Your Wedding Card'
 description: 'Put a QR code on your wedding or invitation card so guests can contribute via UPI. One link, one place to track—no lost screenshots or scribbled names.'
 pubDate: 'Feb 13 2026'
+heroImage: '../../assets/blog/qr-wedding-card-guide/blog-image.png'
 ---
 
 The invitation goes out. Relatives and friends want to give. The question is how: a link in a WhatsApp group that scrolls away, a UPI number someone has to type, or a QR code they can scan from the card itself. Putting a QR code on your wedding or event card means the contribution link is right there—no digging for messages, no typing mistakes. Guests scan, pay with whatever UPI app they use, and you track everything in one place.
