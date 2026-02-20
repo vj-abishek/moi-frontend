@@ -6,6 +6,7 @@ import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE_HOME, FEATURES, HOW_IT_WORKS, getAppUrl } from '../consts';
 import { generateSoftwareApplicationSchema, generateVideoObjectSchema, generateWebPageSchema } from '../seo';
 import thumb from '../assets/thumb.jpg';
+import heroImage from '../assets/blog/qr-wedding-card-guide/blog-image.png';
 
 const signupUrl = getAppUrl('/signup', Astro.url);
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
@@ -46,34 +47,42 @@ const BENEFITS = FEATURES.slice(0, 3);
 
     <main class="flex-1">
       <!-- Hero -->
-      <section id="hero-section" class="relative overflow-hidden min-h-[88vh] flex items-center">
-        <div class="absolute inset-0 bg-linear-to-b from-base-100 via-base-100 to-base-200/50"></div>
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,oklch(76.88%_0.17_81/.12),transparent)]"></div>
-        <canvas id="dot-grid" class="absolute inset-0 w-full h-full z-1 pointer-events-none" aria-hidden="true"></canvas>
+      <section id="hero-section" class="relative flex flex-col justify-center transition-all duration-300 mx-4 md:mx-8 xl:mx-auto max-w-7xl mt-4 md:mt-6 rounded-3xl md:rounded-[2.5rem] overflow-hidden min-h-[70vh] md:min-h-[85vh] shadow-2xl shadow-base-300/50">
+        <div class="absolute inset-0 z-0">
+          <Image 
+            src={heroImage} 
+            alt="Moi Hero Background" 
+            width={1920}
+            height={1080}
+            class="w-full h-full object-cover"
+            loading="eager"
+          />
+          <div class="absolute inset-0 bg-black/50 bg-gradient-to-t from-black/80 via-black/40 to-black/40"></div>
+        </div>
 
-        <div class="max-w-4xl mx-auto px-6 py-24 relative z-10 text-center">
-          <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-6" style="font-family: var(--font-moi-display), 'Fraunces', serif;">
+        <div class="max-w-4xl mx-auto px-6 py-24 relative z-10 text-center flex-1 flex flex-col justify-center items-center">
+          <p class="text-[0.65rem] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] text-white/80 font-bold mb-4 sm:mb-6" style="font-family: var(--font-moi-display), 'Fraunces', serif;">
             Gift tracking for weddings & celebrations
           </p>
-          <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-6" style="font-family: var(--font-moi-display), 'Fraunces', serif;">
+          <h1 class="text-[2.5rem] sm:text-5xl md:text-[5rem] font-bold tracking-tight leading-[1.1] md:leading-[1.05] mb-4 sm:mb-6 text-white drop-shadow-lg" style="font-family: var(--font-moi-display), 'Fraunces', serif;">
             Track every contribution.<br />
             <span class="text-primary italic font-normal">Never miss a மொய்.</span>
           </h1>
-          <p class="text-lg md:text-xl text-base-content/70 leading-relaxed mb-10 max-w-2xl mx-auto">
-            One link. Real-time totals. UPI, cash, and gifts in one place. Share with family, export when you need it.
+          <p class="text-base md:text-xl font-medium tracking-wide text-white/90 drop-shadow leading-relaxed mb-10 max-w-2xl mx-auto text-balance">
+            One link. Real-time totals. No spreadsheets.
           </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <div class="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto">
             <a
               href={signupUrl}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-content font-semibold text-sm uppercase tracking-wider hover:bg-primary/90 transition-all hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base-100"
+              class="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-content font-bold text-sm uppercase tracking-wider hover:bg-primary/90 transition-all hover:scale-[1.02] shadow-xl"
             >
               Get started free
             </a>
             <a
               href="#how-it-works"
-              class="inline-flex items-center justify-center px-8 py-4 border border-base-content/25 text-sm font-medium hover:border-primary hover:text-primary transition-colors"
+              class="inline-flex items-center justify-center px-8 py-4 border border-white/30 text-white text-sm font-semibold hover:border-white hover:bg-white/10 transition-colors backdrop-blur-sm shadow-xl"
             >
               See how it works
             </a>
@@ -235,107 +244,7 @@ const BENEFITS = FEATURES.slice(0, 3);
       })();
     </script>
 
-    <script is:inline>
-      (function() {
-        var canvas = document.getElementById('dot-grid');
-        if (!canvas) return;
-        var ctx = canvas.getContext('2d');
-        var heroSection = document.getElementById('hero-section');
-        var DOT_SPACING = 40;
-        var BASE_RADIUS = 1;
-        var MAX_RADIUS = 4;
-        var BASE_ALPHA = 0.06;
-        var MAX_ALPHA = 0.5;
-        var INFLUENCE_RADIUS = 100;
-        var LERP_FACTOR = 0.1;
-        var PRIMARY = { r: 234, g: 179, b: 8 };
-        var BASE = { r: 255, g: 255, b: 255 };
-        var mouseX = -1000, mouseY = -1000, dots = [], animationId = null, isVisible = true;
 
-        function createDots() {
-          dots = [];
-          var cols = Math.ceil(canvas.width / DOT_SPACING) + 1;
-          var rows = Math.ceil(canvas.height / DOT_SPACING) + 1;
-          for (var r = 0; r < rows; r++)
-            for (var c = 0; c < cols; c++)
-              dots.push({
-                x: c * DOT_SPACING,
-                y: r * DOT_SPACING,
-                currentRadius: BASE_RADIUS,
-                currentAlpha: BASE_ALPHA,
-                currentColor: { r: BASE.r, g: BASE.g, b: BASE.b }
-              });
-        }
-        function lerp(a, b, t) { return a + (b - a) * t; }
-        function resizeCanvas() {
-          var rect = heroSection.getBoundingClientRect();
-          var dpr = window.devicePixelRatio || 1;
-          canvas.width = rect.width * dpr;
-          canvas.height = rect.height * dpr;
-          canvas.style.width = rect.width + 'px';
-          canvas.style.height = rect.height + 'px';
-          ctx.scale(dpr, dpr);
-          createDots();
-        }
-        function updateDot(dot) {
-          var dx = mouseX - dot.x, dy = mouseY - dot.y;
-          var d = Math.sqrt(dx * dx + dy * dy);
-          var targetR = BASE_RADIUS, targetA = BASE_ALPHA, targetC = { r: BASE.r, g: BASE.g, b: BASE.b };
-          if (d < INFLUENCE_RADIUS) {
-            var inf = 1 - d / INFLUENCE_RADIUS;
-            inf = inf * inf;
-            targetR = BASE_RADIUS + (MAX_RADIUS - BASE_RADIUS) * inf;
-            targetA = BASE_ALPHA + (MAX_ALPHA - BASE_ALPHA) * inf;
-            targetC = {
-              r: BASE.r + (PRIMARY.r - BASE.r) * inf,
-              g: BASE.g + (PRIMARY.g - BASE.g) * inf,
-              b: BASE.b + (PRIMARY.b - BASE.b) * inf
-            };
-          }
-          dot.currentRadius = lerp(dot.currentRadius, targetR, LERP_FACTOR);
-          dot.currentAlpha = lerp(dot.currentAlpha, targetA, LERP_FACTOR);
-          dot.currentColor.r = lerp(dot.currentColor.r, targetC.r, LERP_FACTOR);
-          dot.currentColor.g = lerp(dot.currentColor.g, targetC.g, LERP_FACTOR);
-          dot.currentColor.b = lerp(dot.currentColor.b, targetC.b, LERP_FACTOR);
-        }
-        function drawDot(dot) {
-          var c = dot.currentColor;
-          ctx.beginPath();
-          ctx.arc(dot.x, dot.y, dot.currentRadius, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(' + Math.round(c.r) + ',' + Math.round(c.g) + ',' + Math.round(c.b) + ',' + dot.currentAlpha + ')';
-          ctx.fill();
-        }
-        function animate() {
-          if (!isVisible) { animationId = requestAnimationFrame(animate); return; }
-          var rect = heroSection.getBoundingClientRect();
-          ctx.clearRect(0, 0, rect.width, rect.height);
-          for (var i = 0; i < dots.length; i++) { updateDot(dots[i]); drawDot(dots[i]); }
-          animationId = requestAnimationFrame(animate);
-        }
-        function onMove(e) {
-          var rect = heroSection.getBoundingClientRect();
-          mouseX = e.clientX - rect.left;
-          mouseY = e.clientY - rect.top;
-        }
-        function onLeave() { mouseX = -1000; mouseY = -1000; }
-        var observer = new IntersectionObserver(function(entries) {
-          entries.forEach(function(e) { isVisible = e.isIntersecting; });
-        }, { threshold: 0 });
-        resizeCanvas();
-        observer.observe(heroSection);
-        heroSection.addEventListener('mousemove', onMove);
-        heroSection.addEventListener('mouseleave', onLeave);
-        window.addEventListener('resize', resizeCanvas);
-        animate();
-        document.addEventListener('astro:before-swap', function() {
-          if (animationId) cancelAnimationFrame(animationId);
-          observer.disconnect();
-          heroSection.removeEventListener('mousemove', onMove);
-          heroSection.removeEventListener('mouseleave', onLeave);
-          window.removeEventListener('resize', resizeCanvas);
-        });
-      })();
-    </script>
     <style is:global>
       #hero-section h1,
       #how-it-works h2,

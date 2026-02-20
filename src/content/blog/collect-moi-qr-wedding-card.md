@@ -13,7 +13,7 @@ Here’s how to set that up in Moi and get a QR code you can print on your card.
 
 In Moi, open the create flow and add a new event—e.g. “Akash Wedding” or your function name. Click **Create** to finish.
 
-![Create a new event in the modal, e.g. Akash Wedding](/blog/qr-wedding-card-guide/01-create-event-modal.jpg)
+![Create a new event in the modal, e.g. Akash Wedding](../../assets/blog/qr-wedding-card-guide/01-create-event-modal.jpg)
 
 You’ll land on the event. Next step is telling Moi where the money should go: who receives it and which UPI ID to use.
 
@@ -24,13 +24,13 @@ Contributions are tied to recipients. Add the person (or account) that will rece
 - In the form, enter the **Name** (e.g. the bride, groom, or family member).
 - Enter the **UPI ID** that will actually receive the money (the same ID you’d share for UPI payments).
 
-![Enter the recipient name in the Name field](/blog/qr-wedding-card-guide/02-name-field.jpg)
+![Enter the recipient name in the Name field](../../assets/blog/qr-wedding-card-guide/02-name-field.jpg)
 
-![Enter the UPI ID in the UPI ID field](/blog/qr-wedding-card-guide/03-upi-id-field.jpg)
+![Enter the UPI ID in the UPI ID field](../../assets/blog/qr-wedding-card-guide/03-upi-id-field.jpg)
 
 Then click **Add Recipient** so the recipient is saved. You can add more than one if different people are receiving (e.g. separate IDs for bride and groom).
 
-![Click Add Recipient to save the first recipient](/blog/qr-wedding-card-guide/04-add-recipient.jpg)
+![Click Add Recipient to save the first recipient](../../assets/blog/qr-wedding-card-guide/04-add-recipient.jpg)
 
 Once at least one recipient is added, the event has a live contribution link. That link is what you’ll share and turn into a QR code.
 
@@ -38,11 +38,11 @@ Once at least one recipient is added, the event has a live contribution link. Th
 
 In the navigation for that event, use **Copy** to copy the contribution link. You can paste it into WhatsApp, email, or any message. Anyone opening the link can see the event and pay via UPI; you’re not changing how they pay, only where they land and how you track it.
 
-![Copy the contribution link from the navigation bar](/blog/qr-wedding-card-guide/05-copy-link.jpg)
+![Copy the contribution link from the navigation bar](../../assets/blog/qr-wedding-card-guide/05-copy-link.jpg)
 
 You can also open **Analytics** from the same bar to see contributions and activity for the event.
 
-![View analytics from the navigation bar](/blog/qr-wedding-card-guide/06-analytics.jpg)
+![View analytics from the navigation bar](../../assets/blog/qr-wedding-card-guide/06-analytics.jpg)
 
 For the wedding card, the main thing you need next is the QR code that points to this same link.
 
@@ -50,15 +50,15 @@ For the wedding card, the main thing you need next is the QR code that points to
 
 Go to your event list and click **Manage** on the event (e.g. “Testing In Prod” or your real event name).
 
-![Click Manage on the event card](/blog/qr-wedding-card-guide/07-manage-button.jpg)
+![Click Manage on the event card](../../assets/blog/qr-wedding-card-guide/07-manage-button.jpg)
 
 On the event details page, next to the contribution link you’ll see a **QR** icon. Click it to open the QR code.
 
-![Click the QR icon next to the link on the event details page](/blog/qr-wedding-card-guide/08-qr-icon.jpg)
+![Click the QR icon next to the link on the event details page](../../assets/blog/qr-wedding-card-guide/08-qr-icon.jpg)
 
 In the QR modal, click **Download QR Code** to save the image. Use that file with your designer or printer for the wedding card.
 
-![Download the QR code from the modal](/blog/qr-wedding-card-guide/09-download-qr.jpg)
+![Download the QR code from the modal](../../assets/blog/qr-wedding-card-guide/09-download-qr.jpg)
 
 That’s it. The downloaded QR code encodes your contribution link. When guests scan it, they open the same page as the link—no app install, no signup for them. They pay via UPI as usual; you track who gave what in Moi.
 

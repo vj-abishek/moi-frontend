@@ -3,7 +3,7 @@
 export const SEO_CONFIG = {
   siteName: 'Moi',
   /** Name shown in SoftwareApplication rich result – descriptive so search doesn’t show only “Moi” */
-  schemaAppName: 'Moi – Wedding Gift Tracker',
+  schemaAppName: 'Moi – Wedding UPI & Cash Tracker',
   siteUrl: 'https://getmoi.in',
   appUrl: 'https://app.getmoi.in',
   /** Landing page source only (not the app). For sameAs – ties this site to getmoi for Google. */
@@ -13,22 +13,22 @@ export const SEO_CONFIG = {
   locale: 'en_IN',
   logoUrl: 'https://getmoi.in/logo.png',
   /** Short, keyword-rich description for SoftwareApplication rich results */
-  appDescription: 'Free wedding gift tracker app. Track UPI, cash and gifts in real time. One link for guests.',
+  appDescription: 'Live UPI and cash tracker for Indian weddings. Log money received, safely accept UPI contributions via QR, and export to CSV.',
   keywords: [
-    'moi',
+    'upi tracker for wedding',
+    'wedding cash tracker',
+    'wedding upi app',
+    'moi app',
     'மொய்',
-    'gift tracking',
-    'wedding gift management',
-    'contribution tracking',
+    'money tracking app for wedding',
+    'log wedding contributions',
     'Indian wedding',
     'Tamil wedding',
-    'UPI payments',
-    'gift registry',
-    'celebration gifts',
+    'wedding UPI payments',
     'shagun tracker',
     'wedding moi',
   ],
-  description: 'Track gift contributions during weddings and celebrations. Never miss a மொய்.',
+  description: 'The easiest way to track UPI and cash received at Indian weddings. Say goodbye to spreadsheets and never miss logging a மொய்.',
 };
 
 // Schema.org types
