@@ -7,10 +7,13 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_TITLE, getAppUrl } from '../consts';
 import { generateBlogPostingSchema, generateBreadcrumbSchema, combineSchemas, SEO_CONFIG } from '../seo';
+import defaultHeroImage from '../assets/blog/qr-wedding-card-guide/blog-image.png';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage: propsHeroImage } = Astro.props;
+
+const heroImage = propsHeroImage || defaultHeroImage;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 
@@ -61,53 +64,53 @@ const heroAlt = description ? `${title}: ${description}` : title;
     
     <main class="flex-1">
       <article>
-        <!-- Breadcrumbs -->
-        <nav class="max-w-3xl mx-auto px-6 pt-6" aria-label="Breadcrumb">
-          <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-base-content/50">
-            <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
-            <li aria-hidden="true">/</li>
-            <li><a href="/blog/" class="hover:text-primary transition-colors">Blog</a></li>
-            <li aria-hidden="true">/</li>
-            <li class="text-base-content/80" aria-current="page">{title}</li>
-          </ol>
-        </nav>
-
         <!-- Hero Section -->
-        <header class="border-b border-base-300">
-          <div class="max-w-3xl mx-auto px-6 py-16 md:py-24">
-            <div class="space-y-4">
-              <div class="flex items-center gap-4 text-xs text-base-content/40">
+        <header class={`relative flex flex-col justify-center transition-all duration-300 ${heroImage ? 'mx-4 md:mx-8 xl:mx-auto max-w-7xl mt-4 md:mt-6 rounded-3xl md:rounded-[2.5rem] overflow-hidden min-h-[50vh] md:min-h-[60vh] lg:min-h-[70vh] shadow-2xl shadow-base-300/50' : 'border-b border-base-300'}`}>
+          {heroImage && (
+            <div class="absolute inset-0 z-0">
+              <Image 
+                src={heroImage} 
+                alt={heroAlt} 
+                width={1920}
+                height={1080}
+                class="w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-black/50 bg-gradient-to-t from-black/80 via-black/40 to-black/40"></div>
+            </div>
+          )}
+
+          <div class="relative z-10 w-full flex-1 flex flex-col">
+            <!-- Breadcrumbs -->
+            <nav class="max-w-3xl mx-auto w-full px-6 pt-8 md:pt-12 pb-2" aria-label="Breadcrumb">
+              <ol class={`flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium ${heroImage ? 'text-white/70' : 'text-base-content/50'}`}>
+                <li><a href="/" class={`transition-colors ${heroImage ? 'hover:text-white' : 'hover:text-primary'}`}>Home</a></li>
+                <li aria-hidden="true">/</li>
+                <li><a href="/blog/" class={`transition-colors ${heroImage ? 'hover:text-white' : 'hover:text-primary'}`}>Blog</a></li>
+                <li aria-hidden="true">/</li>
+                <li class={`truncate max-w-[200px] sm:max-w-xs ${heroImage ? 'text-white' : 'text-base-content/80'}`} aria-current="page">{title}</li>
+              </ol>
+            </nav>
+
+            <div class={`max-w-3xl mx-auto px-6 flex flex-col justify-end flex-1 w-full ${heroImage ? 'py-12 md:py-16' : 'py-12 md:py-16'}`}>
+              <div class={`flex items-center gap-3 text-sm font-semibold uppercase tracking-wider mb-4 ${heroImage ? 'text-white/90 drop-shadow-sm' : 'text-base-content/60'}`}>
                 <FormattedDate date={pubDate} />
                 {updatedDate && (
-                  <span class="text-base-content/30">
+                  <span>
                     · Updated <FormattedDate date={updatedDate} />
                   </span>
                 )}
               </div>
-              <h1 class="text-3xl md:text-5xl font-bold tracking-tight leading-tight font-sans">
+              <h1 class={`text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] font-sans text-balance mb-6 ${heroImage ? 'text-white drop-shadow-md' : ''}`}>
                 {title}
               </h1>
               {description && (
-                <p class="text-lg text-base-content/60 max-w-2xl">
+                <p class={`text-lg md:text-xl max-w-2xl text-balance leading-relaxed ${heroImage ? 'text-white/90 drop-shadow-sm' : 'text-base-content/70'}`}>
                   {description}
                 </p>
               )}
             </div>
           </div>
         </header>
-
-        <!-- Hero Image -->
-        {heroImage && (
-          <div class="max-w-4xl mx-auto px-6 py-8">
-            <Image 
-              src={heroImage} 
-              alt={heroAlt} 
-              width={960} 
-              height={480}
-              class="w-full h-auto border border-base-300"
-            />
-          </div>
-        )}
 
         <!-- Content -->
         <div class="max-w-3xl mx-auto px-6 py-12">
