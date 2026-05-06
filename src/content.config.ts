@@ -13,6 +13,10 @@ const blog = defineCollection({
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
 			heroImage: image().optional(),
+			/** Use for heroes served from `/public` (avoids content-layer asset resolution) */
+			heroImagePublic: z.string().optional(),
+			/** Optional meta keywords; falls back to site defaults in layout */
+			keywords: z.array(z.string()).optional(),
 		}),
 });
 

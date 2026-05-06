@@ -11,20 +11,38 @@ import defaultHeroImage from '../assets/blog/qr-wedding-card-guide/blog-image.pn
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage: propsHeroImage } = Astro.props;
+const {
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	heroImage: propsHeroImage,
+	heroImagePublic,
+	keywords: postKeywords,
+} = Astro.props;
 
-const heroImage = propsHeroImage || defaultHeroImage;
+const heroImage = heroImagePublic ?? propsHeroImage ?? defaultHeroImage;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+
+const siteUrl = Astro.site ?? new URL('https://getmoi.in');
 
 // Format dates for schema
 const datePublished = pubDate.toISOString();
 const dateModified = updatedDate ? updatedDate.toISOString() : datePublished;
 
-// Get hero image URL for schema
-const heroImageUrl = heroImage 
-  ? (typeof heroImage === 'string' ? heroImage : heroImage.src)
-  : SEO_CONFIG.logoUrl;
+// Get hero image URL for schema (absolute)
+function absoluteFromSite(path: string): string {
+	return new URL(path.startsWith('/') ? path : `/${path}`, siteUrl).href;
+}
+const heroImageUrl = heroImage
+	? typeof heroImage === 'string'
+		? absoluteFromSite(heroImage)
+		: absoluteFromSite(heroImage.src)
+	: SEO_CONFIG.logoUrl;
+
+const defaultMetaKeywords = ['moi', 'gift tracking', 'wedding', title.toLowerCase()];
+const metaKeywords = postKeywords?.length ? postKeywords : defaultMetaKeywords;
 
 const blogPostSchema = generateBlogPostingSchema(
   canonicalUrl,
@@ -55,7 +73,7 @@ const heroAlt = description ? `${title}: ${description}` : title;
       image={heroImage}
       schema={schema}
       dateModified={dateModified}
-      keywords={['moi', 'gift tracking', 'wedding', title.toLowerCase()]}
+      keywords={metaKeywords}
     />
   </head>
 
@@ -68,13 +86,25 @@ const heroAlt = description ? `${title}: ${description}` : title;
         <header class={`relative flex flex-col justify-center transition-all duration-300 ${heroImage ? 'mx-4 md:mx-8 xl:mx-auto max-w-7xl mt-4 md:mt-6 rounded-3xl md:rounded-[2.5rem] overflow-hidden min-h-[50vh] md:min-h-[60vh] lg:min-h-[70vh] shadow-2xl shadow-base-300/50' : 'border-b border-base-300'}`}>
           {heroImage && (
             <div class="absolute inset-0 z-0">
-              <Image 
-                src={heroImage} 
-                alt={heroAlt} 
-                width={1920}
-                height={1080}
-                class="w-full h-full object-cover"
-              />
+              {typeof heroImage === 'string' ? (
+                <img
+                  src={heroImage}
+                  alt={heroAlt}
+                  width={1920}
+                  height={1080}
+                  class="w-full h-full object-cover"
+                  loading="eager"
+                  decoding="async"
+                />
+              ) : (
+                <Image
+                  src={heroImage}
+                  alt={heroAlt}
+                  width={1920}
+                  height={1080}
+                  class="w-full h-full object-cover"
+                />
+              )}
               <div class="absolute inset-0 bg-black/50 bg-gradient-to-t from-black/80 via-black/40 to-black/40"></div>
             </div>
           )}
